@@ -51,6 +51,11 @@ local SEASON_EPICFIGHT_MUSIC =
     summer = "music_mod/music/music_epicfight_summer",
 }
 
+local RUINS_BUSY_MUSIC = {
+    normal = "music_mod/music/music_work_ruins",
+    nightmare = "music_mod/music/music_work_ruins_alt"
+}
+
 local TRIGGERED_DANGER_MUSIC =
 {
 
@@ -151,6 +156,14 @@ local BUSYTHEMES = {
     FARMING = 10,
 	CARNIVAL_AMBIENT = 11,
 	CARNIVAL_MINIGAME = 12,
+    NIGHTMARE = 13
+}
+
+local NIGHTMARE_PHASES = {
+    CALM = "calm",
+    WARNING = "warn",
+    NIGHTMARE = "wild",
+    DAWN = "dawn"
 }
 
 --------------------------------------------------------------------------
@@ -168,27 +181,19 @@ local _dangertask = nil
 local _triggeredlevel = nil
 local _isday = nil
 local _isbusydirty = nil
-local _isbusyruins = nil
 local _busytheme = nil
 local _extendtime = nil
 local _soundemitter = nil
 local _activatedplayer = nil --cached for activation/deactivation only, NOT for logic use
 local _stingeractive = false -- Used to prevent music overlapping with stinger
-local _innightmare = false -- When in ruins
-local _inlunar = false -- When on lunar
+local _inruins = false -- When in ruins
+local _nightmarephase = NIGHTMARE_PHASES.CALM  -- Current nightmare cycle phase; defaults to calm and stays there if "Nightmare Phase Music" is disabled
+local _inlunar = false -- When on lunar island
 local _hasinspirationbuff = nil
 
 --------------------------------------------------------------------------
 --[[ Private member functions ]]
 --------------------------------------------------------------------------
-local function StopContinuous()
-	if _busytask ~= nil then
-        _busytask:Cancel()
-	end
-	_busytask = nil
-	_extendtime = 0
-	_soundemitter:SetParameter("busy", "intensity", 0)
-end
 
 local function IsInRuins(player)
     return player.components.areaaware ~= nil
@@ -198,6 +203,15 @@ end
 local function IsOnLunarIsland(player)
     return player.components.areaaware ~= nil
         and player.components.areaaware:CurrentlyInTag("lunacyarea")
+end
+
+local function StopContinuous()
+	if _busytask ~= nil then
+        _busytask:Cancel()
+	end
+	_busytask = nil
+	_extendtime = 0
+	_soundemitter:SetParameter("busy", "intensity", 0)
 end
 
 local function StopBusy(inst, istimeout)
@@ -224,11 +238,16 @@ local function StartBusy(player)
     elseif _dangertask == nil and not _stingeractive and (continuous_mode or _extendtime == 0 or GetTime() >= _extendtime) and _isenabled then
         if _iscave then
             if IsInRuins(player) then
-                if _busytheme ~= BUSYTHEMES.RUINS then
+                -- TODO make this use array/index logic instead of if-chain if possible
+                if _nightmarephase ~= NIGHTMARE_PHASES.NIGHTMARE and _busytheme ~= BUSYTHEMES.RUINS then
                     _soundemitter:KillSound("busy")
-                    _soundemitter:PlaySound("dontstarve/music/music_work_ruins", "busy")
+                    _soundemitter:PlaySound(RUINS_BUSY_MUSIC["normal"], "busy")
+                    _busytheme = BUSYTHEMES.RUINS
+                elseif _nightmarephase == NIGHTMARE_PHASES.NIGHTMARE and _busytheme ~= BUSYTHEMES.NIGHTMARE then
+                    _soundemitter:KillSound("busy")
+                    _soundemitter:PlaySound(RUINS_BUSY_MUSIC["nightmare"], "busy")
+                    _busytheme = BUSYTHEMES.NIGHTMARE
                 end
-                _busytheme = BUSYTHEMES.RUINS
             else
                 if _busytheme ~= BUSYTHEMES.CAVE then
                     _soundemitter:KillSound("busy")
@@ -257,7 +276,7 @@ local function StartBusy(player)
                         season = "autumn"
                     end
                     _soundemitter:PlaySound(
-                        (_innightmare and "dontstarve/music/music_work_ruins") or
+                        (_inruins and "dontstarve/music/music_work_ruins") or  -- TODO replace this with same array once index logic implemented
                         (_iscave and "dontstarve/music/music_work_cave") or
                         (SEASON_BUSY_MUSIC[phase][season]),
                         "busy")
@@ -271,6 +290,7 @@ local function StartBusy(player)
         _extendtime = 0
     end
 end
+
 local function StartOcean(player)
     local function StopOcean(...)
         StopBusy(...)
@@ -560,23 +580,12 @@ local function OnInsane()
     end
 end
 
-
-local function IsInRuins(player)
-    return player.components.areaaware ~= nil
-        and player.components.areaaware:CurrentlyInTag("Nightmare")
-end
-
-local function IsOnLunarIsland(player)
-    return player.components.areaaware ~= nil
-        and player.components.areaaware:CurrentlyInTag("lunacyarea")
-end
-
 local function OnChangeArea(player)
 	if player.components.areaaware then
-		local nightmare = player.components.areaaware:CurrentlyInTag("Nightmare") or false
+		local ruins = player.components.areaaware:CurrentlyInTag("Nightmare") or false
         local lunar = player.components.areaaware:CurrentlyInTag("lunacyarea") or false
-		if nightmare ~= _innightmare then
-			_innightmare = nightmare
+		if ruins ~= _inruins then
+			_inruins = ruins
 			_isbusydirty = true
 		end
         if lunar ~= _inlunar then
@@ -648,7 +657,8 @@ local function OnPhase(inst, phase)
         _isbusydirty = true
         return
     end
-    --Don't want to play overlapping stingers
+
+    -- Play stingers if not busy and not in danger
     local time
     if _busytask == nil and _extendtime ~= 0 then
         time = GetTime()
@@ -668,8 +678,9 @@ local function OnPhase(inst, phase)
 		end
     end
 
+    -- Queue busy music to start after a delay to let stinger play for day and dusk (night has no stinger)
 	if phase ~= "night" then 
-		_activatedplayer:DoTaskInTime(8, function(player) -- Give the stinger time to play before changing music
+		_activatedplayer:DoTaskInTime(8, function(player)
             _isbusydirty = true
             if continuous_mode then
                 _stingeractive = false
@@ -677,7 +688,7 @@ local function OnPhase(inst, phase)
             end
 		end)
 	else
-		_activatedplayer:DoTaskInTime(2, function(player) -- No stinger. Wait a shorter time.
+		_activatedplayer:DoTaskInTime(2, function(player)
             _isbusydirty = true
             if continuous_mode then
                 StartBusy(player)
@@ -685,8 +696,33 @@ local function OnPhase(inst, phase)
 		end)
 	end
 	StopContinuous()
+
     --Repurpose this as a delay before stingers or busy can start again
     _extendtime = (time or GetTime()) + 15
+end
+
+local function OnNightmarePhase(inst, phase)
+    _nightmarephase = phase
+    local ruins_music_dirty = _inruins and (_nightmarephase == NIGHTMARE_PHASES.NIGHTMARE or _nightmarephase == NIGHTMARE_PHASES.DAWN)
+
+    -- If we aren't in ruins or didn't just transition to/from nightmare phase, don't trigger music change
+    if not ruins_music_dirty then
+        return
+    end
+
+    -- If we're in a fight, dirty busy music so it updates after danger music finishes. Otherwise, update music immediately.
+    if _dangertask ~= nil or not _isenabled then
+        _isbusydirty = true
+    else
+        _activatedplayer:DoTaskInTime(2, function(player)
+            _isbusydirty = true
+            if continuous_mode then
+                StartBusy(player)
+            end
+        end)
+    end
+
+    -- Prompt immediate update if we are in ruins busy and just transitioned into or out of nightmare phase
 end
 
 local function OnSeason()
@@ -702,6 +738,9 @@ local function StartSoundEmitter()
             _isday = inst.state.isday
             inst:WatchWorldState("phase", OnPhase)
             inst:WatchWorldState("season", OnSeason)
+        elseif MOD_CONFIG.USE_NIGHTMARE_ALT then
+            _nightmarephase = inst.state.nightmarephase  -- TODO make sure this works
+            inst:WatchWorldState("nightmarephase", OnNightmarePhase)
         end
     end
 end
@@ -713,6 +752,7 @@ local function StopSoundEmitter()
         _soundemitter:KillSound("busy")
         inst:StopWatchingWorldState("phase", OnPhase)
         inst:StopWatchingWorldState("season", OnSeason)
+        inst:StopWatchingWorldState("nightmarephase", OnNightmarePhase)
         _isday = nil
 		_busytheme = nil
         _isbusydirty = nil
