@@ -8,7 +8,7 @@ return Class(function(self, inst)
 --[[ Constants ]]
 --------------------------------------------------------------------------
 
-local MOD_CONFIG = DKC_MUSIC_REVISITED.CONFIG  -- TODO need to implement ruins music swapping functionality for USE_NIGHTMARE_ALT option
+local MOD_CONFIG = DKC_MUSIC_REVISITED.TRACK_CONFIG
 
 local SEASON_BUSY_MUSIC =
 {

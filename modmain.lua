@@ -10,7 +10,7 @@ end
 GLOBAL.continuous_mode = (GetModConfigData("music_mode") == "continuous")
 
 GLOBAL.DKC_MUSIC_REVISITED = {}
-GLOBAL.DKC_MUSIC_REVISITED.CONFIG = {
+GLOBAL.DKC_MUSIC_REVISITED.TRACK_CONFIG = {
     USE_NEW_AUTUMN_NIGHT = (GetModConfigData("autumn_night_music") == "refresh"),
     USE_NEW_WINTER_DUSK = (GetModConfigData("winter_dusk_music") == "refresh"),
     USE_NEW_SPRING_FIGHT = (GetModConfigData("spring_fight_music") == "refresh"),
