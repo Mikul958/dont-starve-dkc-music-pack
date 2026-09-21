@@ -1,14 +1,23 @@
--- Set music mode and assign main menu music to custom FE track
+-- Set music mode, assign main menu music to custom FE track (if enabled), and push mod config to global for use in other components
 Assets = {
 	Asset("SOUNDPACKAGE", "sound/music_mod.fev"),
     Asset("SOUND", "sound/music_mod.fsb"),
 }
-GLOBAL.FE_MUSIC = "music_mod/music/music_FE"
-GLOBAL.continuous_mode = (GetModConfigData("music_mode") ~= "busy")
+
+if (GetModConfigData("title_music") == "yes") then
+    GLOBAL.FE_MUSIC = "music_mod/music/music_FE"
+end
+GLOBAL.continuous_mode = (GetModConfigData("music_mode") == "continuous")
+
+GLOBAL.DKC_MUSIC_REVISITED = {}
+GLOBAL.DKC_MUSIC_REVISITED.CONFIG = {
+    USE_NEW_AUTUMN_NIGHT = (GetModConfigData("autumn_night_music") == "refresh"),
+    USE_NEW_WINTER_DUSK = (GetModConfigData("winter_dusk_music") == "refresh"),
+    USE_NEW_SPRING_FIGHT = (GetModConfigData("spring_fight_music") == "refresh"),
+    USE_NIGHTMARE_ALT = (GetModConfigData("nightmare_music") == "yes")
+}
 
 ---------------------------------------------------------------------
-
--- Remap music to custom tracks
 
 -- Busy
 RemapSoundEvent( "dontstarve/music/music_work",                                     "music_mod/music/music_work" )

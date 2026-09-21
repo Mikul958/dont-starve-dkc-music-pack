@@ -8,6 +8,8 @@ return Class(function(self, inst)
 --[[ Constants ]]
 --------------------------------------------------------------------------
 
+local MOD_CONFIG = DKC_MUSIC_REVISITED.CONFIG  -- TODO need to implement ruins music swapping functionality for USE_NIGHTMARE_ALT option
+
 local SEASON_BUSY_MUSIC =
 {
     day =
@@ -20,17 +22,25 @@ local SEASON_BUSY_MUSIC =
     dusk =
     {
         autumn = "music_mod/music/music_work_dusk",
-        winter = "music_mod/music/music_work_winter_dusk",
+        winter = (MOD_CONFIG.USE_NEW_WINTER_DUSK and "music_mod/music/music_work_winter_dusk_alt" or "music_mod/music/music_work_winter_dusk"),
         spring = "music_mod/music/music_work_spring_dusk",
         summer = "music_mod/music/music_work_summer_dusk",
     },
     night = 
     {
-        autumn = "music_mod/music/music_work_night",
+        autumn = (MOD_CONFIG.USE_NEW_AUTUMN_NIGHT and "music_mod/music/music_work_night_alt" or "music_mod/music/music_work_night"),
         winter = "music_mod/music/music_work_winter_night",
         spring = "music_mod/music/music_work_spring_night",
         summer = "music_mod/music/music_work_summer_night",
     },
+}
+
+local SEASON_DANGER_MUSIC =
+{
+    autumn = "music_mod/music/music_danger",
+    winter = "music_mod/music/music_danger_winter",
+    spring = (MOD_CONFIG.USE_NEW_SPRING_FIGHT and "music_mod/music/music_danger_spring_alt" or "music_mod/music/music_danger_spring"),
+    summer = "music_mod/music/music_danger_summer",
 }
 
 local SEASON_EPICFIGHT_MUSIC =
@@ -39,14 +49,6 @@ local SEASON_EPICFIGHT_MUSIC =
     winter = "music_mod/music/music_epicfight_winter",
     spring = "music_mod/music/music_epicfight_spring",
     summer = "music_mod/music/music_epicfight_summer",
-}
-
-local SEASON_DANGER_MUSIC =
-{
-    autumn = "music_mod/music/music_danger",
-    winter = "music_mod/music/music_danger_winter",
-    spring = "music_mod/music/music_danger_spring",
-    summer = "music_mod/music/music_danger_summer",
 }
 
 local TRIGGERED_DANGER_MUSIC =
