@@ -125,20 +125,20 @@ configuration_options =
 		default = "refresh"
 	},
 	{
-		name = "ruins_music",
-		label = "Ruins Work Music",
+		name = "nightmare_music",
+		label = "Nightmare Phase Music",
 		options = {
 			{
-				description = "Default",
-				data = "default",
-				hover = "Use default ruins work music."
+				description = "Disabled",
+				data = "no",
+				hover = "Use the same ruins work music for all phases."
 			},
 			{
-				description = "Alt",
-				data = "alt",
-				hover = "Use a less unsettling ruins work music."
+				description = "Enabled",
+				data = "yes",
+				hover = "Use an alternate ruins work music during Nightmare phase."
 			}
 		},
-		default = "default"
+		default = "yes"
 	}
 }
