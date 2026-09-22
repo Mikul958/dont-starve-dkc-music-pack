@@ -56,7 +56,7 @@ local BUSY_THEMES = {
     CAVE = 2,
     RUINS = 3,
     OCEAN = 4,
-    LUNAR_ISLAND = 5,
+    LUNAR = 5,
     FEAST = 6,
     RACE = 7,
     TRAINING = 8,
@@ -98,7 +98,7 @@ local TRIGGERED_DANGER_MUSIC = {
         "music_mod/music/music_epicfight_3",
     },
     shadowchess = {
-        "music_mod/music/music_epicfight_ruins",  -- TODO give shadow pieces fallback epicfight music instead of forcing ruins?
+        "music_mod/music/music_epicfight_ruins",  -- TODO give shadow pieces fallback epicfight music instead of forcing ruins maybe?
     },
     klaus = {
         "music_mod/music/music_epicfight_5a",
@@ -151,22 +151,26 @@ local _dangerTask = nil
 local _triggeredLevel = nil
 local _inCaves = false                         -- When in the cave layer
 local _inRuins = false                         -- When in ruins
-local _nightmarePhase = NIGHTMARE_PHASES.CALM  -- Current nightmare cycle phase; defaults to calm and stays there if "Nightmare Phase Music" is disabled
-local _inLunar = false                         -- When on lunar island
+local _nightmarePhase = NIGHTMARE_PHASES.CALM  -- Current nightmare cycle phase; only updated if "Nightmare Phase Music" is enabled
+local _inLunar = false                         -- When on lunar island or in lunar grotto
 
-local _stingerActive = false                    -- Used to prevent music overlapping with stinger
+local _stingerActive = false     -- Used to prevent music overlapping with stinger
 local _hasInspirationBuff = nil
 
 --------------------------------------------------------------------------
 --[[ Private member functions ]]
 --------------------------------------------------------------------------
 
+  -- TODO change music paths to use music mod path instead of vanilla, then remove remaps from modmain when done. Not sure why original script uses this arbitrary mix
+
+-- Helper function, checks whether player is currently in the ruins
 local function IsInRuins(player)
     return player.components.areaaware ~= nil
         and player.components.areaaware:CurrentlyInTag("Nightmare")
 end
 
-local function IsOnLunarIsland(player)
+-- Helper function, checks whether player is currently on the lunar island or in the lunar grotto
+local function IsInLunar(player)
     return player.components.areaaware ~= nil
         and player.components.areaaware:CurrentlyInTag("lunacyarea")
 end
@@ -177,7 +181,7 @@ local function StopContinuous()
 	end
 	_busyTask = nil
 	_extendTime = 0
-	_soundEmitter:SetParameter("busy", "intensity", 0)
+	_soundEmitter:SetParameter("busy", "intensity", 0)  -- Mute music, do not restart; sound in FMOD should cover intensity 0 for this to work correctly
 end
 
 local function StopBusy(inst, isTimeout)
@@ -202,53 +206,54 @@ local function StartBusy(player)
     if _busyTask ~= nil and not _isBusyDirty then
         _extendTime = GetTime() + 15
     elseif _dangerTask == nil and not _stingerActive and (CONTINUOUS_MODE or _extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
-        if _inCaves then
-            if IsInRuins(player) then  -- TODO why do ruins and lunar read cache at times if they just do this here and don't cache? try to standardize that if possible (read in one place then use cache)
-                -- TODO make this use array/index logic instead of if-chain if possible
+
+        -- Check if player is in a lunar biome and assign lunar music
+        if _inLunar then
+            if _busyTheme ~= BUSY_THEMES.LUNAR then
+                _soundEmitter:KillSound("busy")
+                _soundEmitter:PlaySound("turnoftides/music/working", "busy")
+            end
+            _busyTheme = BUSY_THEMES.LUNAR
+        
+        -- Else check if player is in cave layer and assign ruins or cave music
+        elseif _inCaves then
+            if _inRuins then
+                -- TODO make this use array/index logic instead of if-chain if possible this is ugly
                 if _nightmarePhase ~= NIGHTMARE_PHASES.NIGHTMARE and _busyTheme ~= BUSY_THEMES.RUINS then
                     _soundEmitter:KillSound("busy")
-                    _soundEmitter:PlaySound(RUINS_BUSY_MUSIC["normal"], "busy")
+                    _soundEmitter:PlaySound("music_mod/music/music_work_ruins", "busy")
                     _busyTheme = BUSY_THEMES.RUINS
                 elseif _nightmarePhase == NIGHTMARE_PHASES.NIGHTMARE and _busyTheme ~= BUSY_THEMES.NIGHTMARE then
                     _soundEmitter:KillSound("busy")
-                    _soundEmitter:PlaySound(RUINS_BUSY_MUSIC["nightmare"], "busy")
+                    _soundEmitter:PlaySound("music_mod/music/music_work_ruins_alt", "busy")
                     _busyTheme = BUSY_THEMES.NIGHTMARE
                 end
             else
                 if _busyTheme ~= BUSY_THEMES.CAVE then
                     _soundEmitter:KillSound("busy")
-                    _soundEmitter:PlaySound("dontstarve/music/music_work_cave", "busy")
+                    _soundEmitter:PlaySound("music_mod/music/music_work_cave", "busy")
                 end
                 _busyTheme = BUSY_THEMES.CAVE
             end
+        
+        -- Else assign appropriate forest music
         else
-            if IsOnLunarIsland(player) then
-                if _busyTheme ~= BUSY_THEMES.LUNAR_ISLAND then
-                    _soundEmitter:KillSound("busy")
-                    _soundEmitter:PlaySound("turnoftides/music/working", "busy")
+            if _busyTheme ~= BUSY_THEMES.FOREST or _isBusyDirty then
+                _isBusyDirty = false
+                _soundEmitter:KillSound("busy")
+                
+                -- Default to autumn day if music does not exist for this season/phase
+                local season = inst.state.season
+                local phase = inst.state.phase
+                if SEASON_BUSY_MUSIC[phase] == nil then
+                    phase = "day"
                 end
-                _busyTheme = BUSY_THEMES.LUNAR_ISLAND
-            else
-                if _busyTheme ~= BUSY_THEMES.FOREST or _isBusyDirty then
-                    _isBusyDirty = false
-                    _soundEmitter:KillSound("busy")
-                    -- Check if music for phase and season exist
-                    local season = inst.state.season
-                    local phase = inst.state.phase
-                    if SEASON_BUSY_MUSIC[phase] == nil then
-                        phase = "day"
-                    end
-                    if SEASON_BUSY_MUSIC[phase][season] == nil then
-                        season = "autumn"
-                    end
-                    _soundEmitter:PlaySound(
-                        (_inRuins and "dontstarve/music/music_work_ruins") or  -- TODO replace this with same array once index logic implemented
-                        (_inCaves and "dontstarve/music/music_work_cave") or
-                        (SEASON_BUSY_MUSIC[phase][season]),
-                        "busy")
+                if SEASON_BUSY_MUSIC[phase][season] == nil then
+                    season = "autumn"
                 end
-                _busyTheme = BUSY_THEMES.FOREST
+                _soundEmitter:PlaySound(SEASON_BUSY_MUSIC[phase][season], "busy")
             end
+            _busyTheme = BUSY_THEMES.FOREST
         end
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
@@ -425,13 +430,13 @@ local function StartDanger(player)
         local epicfightEncounters = #TheSim:FindEntities(x, y, z, 30, EPIC_TAGS, NO_EPIC_TAGS)  -- Last 2 params = must have tags, can't have tags
         if epicfightEncounters > 0 then
             _soundEmitter:PlaySound(
-                IsInRuins(player) and "dontstarve/music/music_epicfight_ruins" or
+                _inRuins and "dontstarve/music/music_epicfight_ruins" or
                 _inCaves and "dontstarve/music/music_epicfight_cave" or
                 SEASON_EPICFIGHT_MUSIC[inst.state.season],
                 "danger")
         else
             _soundEmitter:PlaySound(
-                IsInRuins(player) and "dontstarve/music/music_danger_ruins" or
+                _inRuins and "dontstarve/music/music_danger_ruins" or
                 _inCaves and "dontstarve/music/music_danger_cave" or
                 SEASON_DANGER_MUSIC[inst.state.season],
                 "danger")
@@ -553,8 +558,8 @@ end
 
 local function OnChangeArea(player)
 	if player.components.areaaware then
-		local ruins = player.components.areaaware:CurrentlyInTag("Nightmare") or false
-        local lunar = player.components.areaaware:CurrentlyInTag("lunacyarea") or false  -- TODO does this include lunar grotto? music pausing when entered
+		local ruins = IsInRuins(player)
+        local lunar = IsInLunar(player)
 		if ruins ~= _inRuins then
 			_inRuins = ruins
 			_isBusyDirty = true
@@ -569,28 +574,13 @@ local function OnChangeArea(player)
 	end
 end
 
-local function OnEnlightened()
-	-- TEMP
-    if _dangerTask == nil and _isEnabled then
-        _soundEmitter:PlaySound("dontstarve/sanity/gonecrazy_stinger")
-        StopContinuous()
-        --Repurpose this as a delay before stingers or busy can start again
-        _extendTime = GetTime() + 15
-		if CONTINUOUS_MODE then
-			_activatedPlayer:DoTaskInTime(8, function(player) -- Give the stinger time to play before playing music
-				StartBusy(player)
-			end)
-		end
-    end
-end
-
 local function StartPlayerListeners(player)
     inst:ListenForEvent("buildsuccess", StartBusy, player)
     inst:ListenForEvent("gotnewitem", ExtendBusy, player)
     inst:ListenForEvent("performaction", CheckAction, player)
     inst:ListenForEvent("attacked", OnAttacked, player)
     inst:ListenForEvent("goinsane", OnInsane, player)
-    inst:ListenForEvent("goenlightened", OnEnlightened, player)
+    inst:ListenForEvent("goenlightened", OnInsane, player)
     inst:ListenForEvent("triggeredevent", StartTriggeredDanger, player)
     inst:ListenForEvent("boatspedup", StartTriggeredWater, player)
     inst:ListenForEvent("isfeasting", StartTriggeredFeasting, player)
@@ -609,7 +599,7 @@ local function StopPlayerListeners(player)
     inst:RemoveEventCallback("performaction", CheckAction, player)
     inst:RemoveEventCallback("attacked", OnAttacked, player)
     inst:RemoveEventCallback("goinsane", OnInsane, player)
-    inst:RemoveEventCallback("goenlightened", OnEnlightened, player)
+    inst:RemoveEventCallback("goenlightened", OnInsane, player)
     inst:RemoveEventCallback("triggeredevent", StartTriggeredDanger, player)
     inst:RemoveEventCallback("boatspedup", StartTriggeredWater, player)
     inst:RemoveEventCallback("isfeasting", StartTriggeredFeasting, player)
@@ -692,8 +682,6 @@ local function OnNightmarePhase(inst, phase)
             end
         end)
     end
-
-    -- Prompt immediate update if we are in ruins busy and just transitioned into or out of nightmare phase
 end
 
 local function OnSeason()
@@ -745,6 +733,8 @@ local function OnPlayerActivated(inst, player)
     end
     _activatedPlayer = player
     _inCaves = inst:HasTag("cave")
+    _inRuins = IsInRuins(player)
+    _inLunar = IsInLunar(player)
     StopSoundEmitter()
     StartSoundEmitter()
     StartPlayerListeners(player)
