@@ -1,21 +1,27 @@
--- Set music mode, assign main menu music to custom FE track (if enabled), and push mod config to global for use in other components
+-- Read in mod config and assign main menu music to custom FE track (if enabled)
 Assets = {
 	Asset("SOUNDPACKAGE", "sound/music_mod.fev"),
     Asset("SOUND", "sound/music_mod.fsb"),
 }
 
-if (GetModConfigData("title_music") == "yes") then
+GLOBAL.DKC_MUSIC_REVISITED = {
+    CONFIG = {
+        MAIN = {
+            continuousMode = (GetModConfigData("music_mode") == "continuous"),
+            replaceTitleMusic = (GetModConfigData("title_music") == "yes")
+        },
+        TRACK = {
+            useNewAutumnNight = (GetModConfigData("autumn_night_music") == "refresh"),
+            useNewWinterDusk = (GetModConfigData("winter_dusk_music") == "refresh"),
+            useNewSpringFight = (GetModConfigData("spring_fight_music") == "refresh"),
+            useNightmareAlt = (GetModConfigData("nightmare_music") == "yes")
+        }
+    }
+}
+
+if GLOBAL.DKC_MUSIC_REVISITED.CONFIG.MAIN.replaceTitleMusic then
     GLOBAL.FE_MUSIC = "music_mod/music/music_FE"
 end
-GLOBAL.continuous_mode = (GetModConfigData("music_mode") == "continuous")
-
-GLOBAL.DKC_MUSIC_REVISITED = {}
-GLOBAL.DKC_MUSIC_REVISITED.TRACK_CONFIG = {
-    USE_NEW_AUTUMN_NIGHT = (GetModConfigData("autumn_night_music") == "refresh"),
-    USE_NEW_WINTER_DUSK = (GetModConfigData("winter_dusk_music") == "refresh"),
-    USE_NEW_SPRING_FIGHT = (GetModConfigData("spring_fight_music") == "refresh"),
-    USE_NIGHTMARE_ALT = (GetModConfigData("nightmare_music") == "yes")
-}
 
 ---------------------------------------------------------------------
 
