@@ -2,7 +2,7 @@
 
 name = "DKC Trilogy Music Pack Revisited"
 description = [[ 
-A collection of music from the original Donkey Kong Country trilogy. Based on the DKC Trilogy Music Pack mod by Phasmite, adds more tracks and fixes tracks broken by updates.
+A collection of music from the original Donkey Kong Country trilogy. Based on the DKC Trilogy Music Pack mod by Phasmite/Raider, adds more tracks and fixes broken ones.
 
 Visit the mod page for a full list of tracks!
 ]]
@@ -56,17 +56,17 @@ configuration_options =
 	},
 	{
 		name = "title_music",
-		label = "Replace Main Menu Music",
+		label = "Main Menu Music",
 		options = {
 			{
-				description = "Yes",
-				data = "yes",
-				hover = "Replace the main menu music with a custom track."
-			},
-			{
-				description = "No",
+				description = "Disabled",
 				data = "no",
 				hover = "Use the default main menu music."
+			},
+			{
+				description = "Enabled",
+				data = "yes",
+				hover = "Use custom music on the main menu."
 			}
 		},
 		default = "yes"

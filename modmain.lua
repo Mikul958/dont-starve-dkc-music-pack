@@ -8,7 +8,8 @@ GLOBAL.DKC_MUSIC_REVISITED = {
     CONFIG = {
         MAIN = {
             continuousMode = (GetModConfigData("music_mode") == "continuous"),
-            replaceTitleMusic = (GetModConfigData("title_music") == "yes")
+            replaceTitleMusic = (GetModConfigData("title_music") == "yes"),
+            miscEvents = false
         },
         TRACK = {
             useNewAutumnNight = (GetModConfigData("autumn_night_music") == "refresh"),
@@ -30,7 +31,7 @@ RemapSoundEvent( "dontstarve/together_FE/DST_theme_portaled",                   
 RemapSoundEvent( "dontstarve/HUD/Together_HUD/collectionscreen/music/jukebox",    	"music_mod/music/jukebox" )             -- Character customization
 RemapSoundEvent( "dontstarve/music/gramaphone_ragtime",                           	"music_mod/music/gramaphone_ragtime" )  -- Credits
 
--- Insanity Ambience
+-- Insanity Ambience  TODO does removing this bring back original insanity ambience? Do I even want that?
 RemapSoundEvent( "dontstarve/sanity/sanity", 										"music_mod/music/sanity" )
 
 -- Woodie Wereforms  TODO these aren't even handled in DynamicMusic? Why are they here?
