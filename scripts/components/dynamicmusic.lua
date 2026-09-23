@@ -81,7 +81,7 @@ local TRIGGERED_DANGER_MUSIC = {
     },
     beequeen = {
         {
-            musicPhase = 1,
+            musicPhase = 0,
             path = "music_mod/music/music_epicfight_4"
         }
     },
@@ -113,7 +113,7 @@ local TRIGGERED_DANGER_MUSIC = {
     },
     shadowchess = {
         {
-            musicPhase = 0,
+            musicPhase = 1,
             path = "music_mod/music/music_epicfight_ruins",
         }
     },
@@ -127,7 +127,7 @@ local TRIGGERED_DANGER_MUSIC = {
             path = "music_mod/music/music_epicfight_stalker_b"
         },
         {
-            musicPhase = 2,
+            musicPhase = 1,
             path = ""
         }
     },
@@ -143,15 +143,23 @@ local TRIGGERED_DANGER_MUSIC = {
             path = "music_mod/music/malbatross"
         }
     },
-    moonbase = {
+    daywalker = {
         {
-            musicPhase = 1,
-            path = "music_mod/music/music_epicfight_moonbase"
-        },
-        {
-            musicPhase = 1,
-            path = "music_mod/music/music_epicfight_moonbase_b"
+            musicPhase = 0,
+            path = ""  -- TODO can't find path
         }
+    },
+    eyeofterror = {  -- TODO is this broken?
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_eyeofterror"  -- TODO couldn't find the actual in-game path, just created this in my fdp
+        }
+    },
+    wagboss_robot = {
+        {
+            musicPhase = 0,
+            path = ""  -- TODO can't find path, also unsure if W.A.R.B.O.T. tag is correct
+        },
     },
 
     -- Celestial champion phases are reported as 3 separate entities instead of using level for some reason
@@ -174,8 +182,16 @@ local TRIGGERED_DANGER_MUSIC = {
         }
     },
 
-    -- TODO eye of terror, nightmare werepig, enlightened WARBOT
-
+    moonbase = {
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_moonbase"
+        },
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_moonbase_b"
+        }
+    },
     pigking = {
         {
             musicPhase = -1,
@@ -185,17 +201,9 @@ local TRIGGERED_DANGER_MUSIC = {
     wagstaff_experiment = {
         {
             musicPhase = -1,
-            "music_mod/music/music_wagstaff_experiment"
+            path = "music_mod/music/music_wagstaff_experiment"
         }
     },
-
-    -- TODO remove this when fallback music is implemented, also remove anything with musicPhase -1
-    default = {
-        {
-            musicPhase = -1,
-            "music_mod/music/music_epicfight_ruins",
-        }
-    }
 }
 
 --------------------------------------------------------------------------
@@ -216,7 +224,8 @@ local _busyTheme = nil
 local _isBusyDirty = nil
 local _extendTime = nil
 local _dangerTask = nil
-local _triggeredLevel = nil
+local _triggeredLevel = nil                    -- Used to track the danger level of a triggered danger encounter
+local _triggeredMusicPhase = nil               -- Used to track whether we should switch music on a new danger level
 local _inCaves = false                         -- When in the cave layer
 local _inRuins = false                         -- When in ruins
 local _nightmarePhase = NIGHTMARE_PHASES.CALM  -- Current nightmare cycle phase; only updated if "Nightmare Phase Music" is enabled
@@ -400,6 +409,7 @@ local function StopDanger(inst, istimeout)
         end
         _dangerTask = nil
         _triggeredLevel = nil
+        _triggeredMusicPhase = nil
         _extendTime = 0
         _soundEmitter:KillSound("danger")
 		if CONTINUOUS_MODE then
@@ -419,19 +429,20 @@ local function StartDanger(player)
         local epicfightEncounters = #TheSim:FindEntities(x, y, z, 30, EPIC_TAGS, NO_EPIC_TAGS)  -- Last 2 params = must have tags, can't have tags
         if epicfightEncounters > 0 then
             _soundEmitter:PlaySound(
-                _inRuins and "dontstarve/music/music_epicfight_ruins" or
-                _inCaves and "dontstarve/music/music_epicfight_cave" or
+                _inRuins and "music_mod/music/music_epicfight_ruins" or
+                _inCaves and "music_mod/music/music_epicfight_cave" or
                 SEASON_EPICFIGHT_MUSIC[inst.state.season],
                 "danger")
         else
             _soundEmitter:PlaySound(
-                _inRuins and "dontstarve/music/music_danger_ruins" or
-                _inCaves and "dontstarve/music/music_danger_cave" or
+                _inRuins and "music_mod/music/music_danger_ruins" or
+                _inCaves and "music_mod/music/music_danger_cave" or
                 SEASON_DANGER_MUSIC[inst.state.season],
                 "danger")
         end
         _dangerTask = inst:DoTaskInTime(10, StopDanger, true)
         _triggeredLevel = nil
+        _triggeredMusicPhase = nil
         _extendTime = 0
 
 		if _hasInspirationBuff then
@@ -465,23 +476,41 @@ local function StartTriggeredDanger(player, data)
     end
     local level = math.max(1, math.floor(data.level or 1))
     if _triggeredLevel == level then
-        print("StartTriggeredDanger() - level same as last time, extending")  -- TODO testing and shite
         _extendTime = math.max(_extendTime, GetTime() + (data.duration or 10))
     elseif _isEnabled then
         print("StartTriggeredDanger() - level different, cutting music and playing new track")  -- TODO testing and shite
         StopDanger()
-        StopContinuous()  -- TODO need to test calling StopContinuous after StopDanger to fix busy and boss music playing at the same time
-        local musicTable = TRIGGERED_DANGER_MUSIC[data.name or "default"] or TRIGGERED_DANGER_MUSIC.default
-        local music = musicTable[level] or musicTable[1]
-        -- TODO musicPhase check when shit actually works
-        if #music.path > 0 then
-            _soundEmitter:PlaySound(music.path, "danger")
+        StopContinuous()
+        local musicTable = TRIGGERED_DANGER_MUSIC[data.name]
+        local musicPhase = 0
+        local musicPath = ""
+        if musicTable ~= nil and #musicTable > 0 then
+            musicPhase = musicTable[level].musicPhase
+            musicPath = musicTable[level].path
+        end
+
+        -- Don't update music if the configured musicPhase is -1 or the same as the last
+        if (musicPhase < 0 or musicPhase == _triggeredMusicPhase) then
+            _extendTime = math.max(_extendTime, GetTime() + (data.duration or 10))
+            return
+        end
+
+        -- Play default epicfight music if configured phase is 0 (or danger source wasn't found in table), else play specific danger music
+        if (musicPhase == 0) then
+            _soundEmitter:PlaySound(
+                _inRuins and "music_mod/music/music_epicfight_ruins" or
+                _inCaves and "music_mod/music/music_epicfight_cave" or
+                SEASON_EPICFIGHT_MUSIC[inst.state.season],
+                "danger")
+        else
+            _soundEmitter:PlaySound(musicPath, "danger")  -- TODO something is very wrong here suddenly?
             if _hasInspirationBuff then
                 _soundEmitter:SetParameter("danger", "wathgrithr_intensity", _hasInspirationBuff)
             end
         end
         _dangerTask = inst:DoTaskInTime(data.duration or 10, StopDanger, true)
         _triggeredLevel = level
+        _triggeredMusicPhase = musicPhase
         _extendTime = 0
     end
 end
@@ -623,6 +652,7 @@ local function OnAttacked(player, data)
     end
 end
 
+-- ** Currently disabled, event listener removed
 local function OnHasInspirationBuff(player, data)
 	_hasInspirationBuff = (data ~= nil and data.on) and 1 or 0
 	_soundEmitter:SetParameter("danger", "wathgrithr_intensity", _hasInspirationBuff)
@@ -630,7 +660,7 @@ end
 
 local function OnInsane()
     if _dangerTask == nil and _isEnabled then
-        _soundEmitter:PlaySound("dontstarve/sanity/gonecrazy_stinger")
+        _soundEmitter:PlaySound("music_mod/music/gonecrazy_stinger")
         StopContinuous()
         --Repurpose this as a delay before stingers or busy can start again
         _extendTime = GetTime() + 15
@@ -676,12 +706,12 @@ local function OnPhase(inst, phase)
         end
     end
     if _isDay then
-        _soundEmitter:PlaySound("dontstarve/music/music_dawn_stinger")
+        _soundEmitter:PlaySound("music_mod/music/music_dawn_stinger")
 		if CONTINUOUS_MODE then
 			_stingerActive = true
 		end
     elseif phase == "dusk" then
-        _soundEmitter:PlaySound("dontstarve/music/music_dusk_stinger")
+        _soundEmitter:PlaySound("music_mod/music/music_dusk_stinger")
 		if CONTINUOUS_MODE then
 			_stingerActive = true
 		end
@@ -755,7 +785,7 @@ local function StartPlayerListeners(player)
     -- inst:ListenForEvent("playhermitmusic", StartHermit, player)
     -- inst:ListenForEvent("playfarmingmusic", StartFarming, player)
     -- inst:ListenForEvent("playcarnivalmusic", StartCarnivalMusic, player)
-    inst:ListenForEvent("hasinspirationbuff", OnHasInspirationBuff, player)
+    -- inst:ListenForEvent("hasinspirationbuff", OnHasInspirationBuff, player)
     inst:ListenForEvent("changearea", OnChangeArea, player)
 end
 
@@ -774,7 +804,7 @@ local function StopPlayerListeners(player)
     -- inst:RemoveEventCallback("playhermitmusic", StartHermit, player)
     -- inst:RemoveEventCallback("playfarmingmusic", StartFarming, player)
     -- inst:RemoveEventCallback("playcarnivalmusic", StartCarnivalMusic, player)
-    inst:RemoveEventCallback("hasinspirationbuff", OnHasInspirationBuff, player)
+    -- inst:RemoveEventCallback("hasinspirationbuff", OnHasInspirationBuff, player)
     inst:RemoveEventCallback("changearea", OnChangeArea, player)
 end
 
@@ -801,7 +831,7 @@ local function StopSoundEmitter()
         _soundEmitter:KillSound("busy")
         inst:StopWatchingWorldState("phase", OnPhase)
         inst:StopWatchingWorldState("season", OnSeason)
-        inst:StopWatchingWorldState("nightmarephase", OnNightmarePhase)  -- TODO may need to qualify with config check
+        inst:StopWatchingWorldState("nightmarephase", OnNightmarePhase)
         _isDay = nil
         _nightmarePhase = NIGHTMARE_PHASES.CALM
 		_busyTheme = nil
