@@ -169,8 +169,8 @@
 <sounddef>
 <name>/FE_Theme</name>
 <guid>{bc5a97cd-8b5a-418e-859f-1b1e724697a5}</guid>
-<type>randomnorepeat</type>
-<playlistmode>0</playlistmode>
+<type>shuffle</type>
+<playlistmode>1</playlistmode>
 <randomrepeatsounds>0</randomrepeatsounds>
 <randomrepeatsilences>0</randomrepeatsilences>
 <shuffleglobal>0</shuffleglobal>
