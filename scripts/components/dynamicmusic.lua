@@ -69,101 +69,133 @@ local NIGHTMARE_PHASES = {
     DAWN = "dawn"
 }
 
--- TODO remove once new logic is implemented and working
-local TRIGGERED_DANGER_MUSIC_OLD = {
-    crabking = {
-        "music_mod/music/music_epicfight_crabking",
-    },
-    malbatross = {
-        "music_mod/music/malbatross",
-    },
-    moonbase = {
-        "music_mod/music/music_epicfight_moonbase",
-        "music_mod/music/music_epicfight_moonbase_b",
-    },
-    toadstool = {
-        "music_mod/music/music_epicfight_toadboss",
+-- Collection of boss music. Keys are danger tags reported in event as they appear in-game, while indices inside tables correspond to reported danger level.
+-- musicPhase is used to track which phase tracks are played; keep the same as the last entry to continue playing the same music as before.
+-- musicPhase of 0 (or entry missing entirely) will result in generic boss music. musicPhase of -1 will skip boss music entirely
+local TRIGGERED_DANGER_MUSIC = {
+    dragonfly = {
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_3",
+        }
     },
     beequeen = {
-        "music_mod/music/music_epicfight_4",
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_4"
+        }
     },
-    dragonfly = {
-        "music_mod/music/music_epicfight_3",
-    },
-    shadowchess = {
-        "music_mod/music/music_epicfight_ruins",
-    },
-    klaus = {
-        "music_mod/music/music_epicfight_5a",
-        "",
-        "music_mod/music/music_epicfight_5b",
+    toadstool = {
+        {
+            musicPhase = 0,
+            path =  "music_mod/music/music_epicfight_toadboss",
+        }
     },
     antlion = {
-        "music_mod/music/music_epicfight_antlion",
+        {
+            musicPhase = 0,
+            "music_mod/music/music_epicfight_antlion",
+        }
+    },
+    klaus = {
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_5a"
+        },
+        {
+            musicPhase = 2,
+            path = ""
+        },
+        {
+            musicPhase = 3,
+            path = "music_mod/music/music_epicfight_5b",  -- TODO implement Northern Hemispheres climax in FMOD if possible, otherwise remove
+        }
+    },
+    shadowchess = {
+        {
+            musicPhase = 0,
+            path = "music_mod/music/music_epicfight_ruins",
+        }
     },
     stalker = {
-        "music_mod/music/music_epicfight_stalker",
-        "music_mod/music/music_epicfight_stalker_b",
-        "",
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_stalker"
+        },
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_stalker_b"
+        },
+        {
+            musicPhase = 2,
+            path = ""
+        }
     },
-    pigking = {
-        "dontstarve/music/music_pigking_minigame",
+    crabking = {
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_crabking"
+        }
     },
-    wagstaff_experiment = {
-        "music_mod/music/music_wagstaff_experiment",
+    malbatross = {
+        {
+            musicPhase = 1,
+            path = "music_mod/music/malbatross"
+        }
     },
+    moonbase = {
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_moonbase"
+        },
+        {
+            musicPhase = 1,
+            path = "music_mod/music/music_epicfight_moonbase_b"
+        }
+    },
+
+    -- Celestial champion phases are reported as 3 separate entities instead of using level for some reason
     alterguardian_phase1 = {
-        "music_mod/music/music_epicfight_alterguardian1",
+        {
+            musicPhase = 1,
+            "music_mod/music/music_epicfight_alterguardian1"
+        }
     },
     alterguardian_phase2 = {
-        "music_mod/music/music_epicfight_alterguardian2",
+        {
+            musicPhase = 1,
+            "music_mod/music/music_epicfight_alterguardian2"
+        }
     },
     alterguardian_phase3 = {
-        "music_mod/music/music_epicfight_alterguardian3",
+        {
+            musicPhase = 1,
+            "music_mod/music/music_epicfight_alterguardian3"
+        }
     },
+
+    -- TODO eye of terror, nightmare werepig, enlightened WARBOT
+
+    pigking = {
+        {
+            musicPhase = -1,
+            path = "dontstarve/music/music_pigking_minigame"
+        }
+    },
+    wagstaff_experiment = {
+        {
+            musicPhase = -1,
+            "music_mod/music/music_wagstaff_experiment"
+        }
+    },
+
+    -- TODO remove this when fallback music is implemented, also remove anything with musicPhase -1
     default = {
-        "music_mod/music/music_epicfight_ruins",
+        {
+            musicPhase = -1,
+            "music_mod/music/music_epicfight_ruins",
+        }
     }
-}
-
--- Map of boss tags to desired track, set up so script can use one track per boss with no interruptions or map to a generic boss theme
--- TODO differentiate between "ignore" for no music and "generic" for generic epicfight music and fill in values properly
-local TRIGGERED_DANGER_MAP = {
-    crabking = "crabKing",
-    malbatross = "malbatross",
-    moonbase = "moonEvent",
-    toadstool = "toadstool",
-    beequeen = "beeQueen",
-    dragonfly = "dragonfly",
-    shadowchess = "shadowPieces",
-    klaus = "klaus",
-    antlion = "antlion",
-    stalker = "ancientFuelweaver",
-    pigking = "pigKingMinigame",
-    wagstaff_experiment = "wagstaffExperiment",
-    alterguardian_phase1 = "celestialChampion",
-    alterguardian_phase2 = "celestialChampion",
-    alterguardian_phase3 = "celestialChampion",
-    -- TODO eye of terror
-    -- TODO warbot
-}
-
-local TRIGGERED_DANGER_MUSIC = {
-    crabKing = "music_mod/music/music_epicfight_crabking",
-    malbatross = "music_mod/music/malbatross",
-    moonEvent = "music_mod/music/music_epicfight_moonbase",
-    toadstool = "music_mod/music/music_epicfight_toadboss",
-    beeQueen = "music_mod/music/music_epicfight_4",
-    dragonfly = "music_mod/music/music_epicfight_3",
-    shadowPieces = "music_mod/music/music_epicfight_ruins",
-    klaus = "music_mod/music/music_epicfight_5a",
-    antlion = "music_mod/music/music_epicfight_antlion",
-    ancientFuelweaver = "music_mod/music/music_epicfight_stalker",
-    pigKingMinigame = "music_mod/music/music_pigking_minigame",
-    wagstaffExperiment ="music_mod/music/music_wagstaff_experiment",
-    celestialChampion = "music_mod/music/music_epicfight_alterguardian1"
-    -- TODO eye of terror
-    -- TODO warbot
 }
 
 --------------------------------------------------------------------------
@@ -425,16 +457,25 @@ end
 --------------------------------------------------------------------------
 
 local function StartTriggeredDanger(player, data)
-    local level = math.max(1, math.floor(data ~= nil and data.level or 1))
+    print("StartTriggeredDanger() - name: " .. data.name .. ", level: " .. (data.level or "none") .. ", duration: " .. (data.duration or "none"))  -- TODO to learn how this shite works
+    print("Current _triggeredLevel is: " .. (_triggeredLevel or "none"))
+    if (data == nil) then
+        print("WARN: StartTriggeredDanger() - data was nil")  -- TODO testing and shite
+        return
+    end
+    local level = math.max(1, math.floor(data.level or 1))
     if _triggeredLevel == level then
+        print("StartTriggeredDanger() - level same as last time, extending")  -- TODO testing and shite
         _extendTime = math.max(_extendTime, GetTime() + (data.duration or 10))
     elseif _isEnabled then
-        StopContinuous()
+        print("StartTriggeredDanger() - level different, cutting music and playing new track")  -- TODO testing and shite
         StopDanger()
-        local music = data ~= nil and TRIGGERED_DANGER_MUSIC_OLD[data.name or "default"] or TRIGGERED_DANGER_MUSIC_OLD.default
-        music = music[level] or music[1]
-        if #music > 0 then
-            _soundEmitter:PlaySound(music, "danger")
+        StopContinuous()  -- TODO need to test calling StopContinuous after StopDanger to fix busy and boss music playing at the same time
+        local musicTable = TRIGGERED_DANGER_MUSIC[data.name or "default"] or TRIGGERED_DANGER_MUSIC.default
+        local music = musicTable[level] or musicTable[1]
+        -- TODO musicPhase check when shit actually works
+        if #music.path > 0 then
+            _soundEmitter:PlaySound(music.path, "danger")
             if _hasInspirationBuff then
                 _soundEmitter:SetParameter("danger", "wathgrithr_intensity", _hasInspirationBuff)
             end
