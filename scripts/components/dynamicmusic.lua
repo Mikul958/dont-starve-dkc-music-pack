@@ -267,7 +267,7 @@ local function StopBusy(inst, isTimeout)
     _soundEmitter:SetParameter("busy", "intensity", 0)
 end
 
--- TODO maybe if I'm not lazy restructure some constants and pass in music as param?
+-- TODO maybe if I'm not lazy restructure some constants and pass in music as param instead?
 local function StartBusy(player)
     if _busyTask ~= nil and not _isBusyDirty then
         _extendTime = GetTime() + 15

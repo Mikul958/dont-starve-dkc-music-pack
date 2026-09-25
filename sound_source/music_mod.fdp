@@ -169,8 +169,8 @@
 <sounddef>
 <name>/FE_Theme</name>
 <guid>{bc5a97cd-8b5a-418e-859f-1b1e724697a5}</guid>
-<type>shuffle</type>
-<playlistmode>1</playlistmode>
+<type>randomnorepeat</type>
+<playlistmode>0</playlistmode>
 <randomrepeatsounds>0</randomrepeatsounds>
 <randomrepeatsilences>0</randomrepeatsilences>
 <shuffleglobal>0</shuffleglobal>
@@ -186,7 +186,7 @@
 <pitch_random_max>0</pitch_random_max>
 <pitch_randomization>0</pitch_randomization>
 <pitch_recalculate>0</pitch_recalculate>
-<volume_db>0</volume_db>
+<volume_db>-4</volume_db>
 <volume_randmethod>1</volume_randmethod>
 <volume_random_min>0</volume_random_min>
 <volume_random_max>0</volume_random_max>
@@ -1883,7 +1883,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -2069,7 +2069,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -2255,7 +2255,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -2441,7 +2441,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,1,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -2634,7 +2634,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-2</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -2778,7 +2778,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-2</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -2915,7 +2915,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -3101,7 +3101,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -3150,7 +3150,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>-3.52</volume_db>
+<volume_db>0</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -3287,7 +3287,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -3336,7 +3336,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>-3.52</volume_db>
+<volume_db>0</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -3473,7 +3473,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -3666,7 +3666,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-2</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -3947,7 +3947,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -4133,7 +4133,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -4319,7 +4319,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -4512,7 +4512,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-8</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -4656,7 +4656,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-2</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -4800,7 +4800,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-2</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -4937,7 +4937,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.630957,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5123,7 +5123,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.630957,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5309,7 +5309,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5502,7 +5502,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-8</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -5783,7 +5783,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5976,7 +5976,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-8</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -6120,7 +6120,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-2</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -6257,7 +6257,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.794328,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -6443,7 +6443,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.794328,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -6917,7 +6917,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,1,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -7103,7 +7103,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,0.630957,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -7273,7 +7273,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,1,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -10131,7 +10131,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.499431,1,0,1</point>
+<point>0.5,1,0,1</point>
 <parametername>sanity</parametername>
 <controlparameter>sanity</controlparameter>
 <_PC_enable>1</_PC_enable>

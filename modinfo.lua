@@ -42,14 +42,14 @@ configuration_options =
 		label = "Music Mode",
 		options = {
 			{
-				description = "Continuous",
-				data = "continuous",
-				hover = "Music will always play."
-			},
-			{
 				description = "Working",
 				data = "busy",
 				hover = "Music only plays if you're working."
+			},
+			{
+				description = "Continuous",
+				data = "continuous",
+				hover = "Music will always play. Dawn/dusk/insanity stingers will not play."
 			}
 		},
 		default = "continuous",
@@ -136,7 +136,7 @@ configuration_options =
 			{
 				description = "Enabled",
 				data = "yes",
-				hover = "Use an alternate ruins work music during Nightmare phase."
+				hover = "Use a spookier ruins work music during Nightmare phase."
 			}
 		},
 		default = "yes"
