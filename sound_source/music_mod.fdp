@@ -169,10 +169,10 @@
 <sounddef>
 <name>/FE_Theme</name>
 <guid>{bc5a97cd-8b5a-418e-859f-1b1e724697a5}</guid>
-<type>randomnorepeat</type>
+<type>random</type>
 <playlistmode>0</playlistmode>
-<randomrepeatsounds>0</randomrepeatsounds>
-<randomrepeatsilences>0</randomrepeatsilences>
+<randomrepeatsounds>1</randomrepeatsounds>
+<randomrepeatsilences>1</randomrepeatsilences>
 <shuffleglobal>0</shuffleglobal>
 <sequentialrememberposition>0</sequentialrememberposition>
 <sequentialglobal>0</sequentialglobal>
@@ -186,7 +186,7 @@
 <pitch_random_max>0</pitch_random_max>
 <pitch_randomization>0</pitch_randomization>
 <pitch_recalculate>0</pitch_recalculate>
-<volume_db>-4</volume_db>
+<volume_db>0</volume_db>
 <volume_randmethod>1</volume_randmethod>
 <volume_random_min>0</volume_random_min>
 <volume_random_max>0</volume_random_max>
@@ -199,13 +199,13 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/FE_Theme.mp3</filename>
+<filename>tracks/FE_Theme.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/FE2_Funky-The-Main-Monkey.mp3</filename>
+<filename>tracks/FE2_Funky-The-Main-Monkey.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -244,7 +244,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnDay_DK-Island-Swing.mp3</filename>
+<filename>tracks/AutumnDay_DK-Island-Swing.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -283,7 +283,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnDusk_Treetop-Tumble.mp3</filename>
+<filename>tracks/AutumnDusk_Treetop-Tumble.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -322,7 +322,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnNight_K-Rool-Returns.mp3</filename>
+<filename>tracks/AutumnNight_K-Rool-Returns.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -361,7 +361,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnNightAlt-Bayou-Boogie.mp3</filename>
+<filename>tracks/AutumnNightAlt-Bayou-Boogie.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -400,7 +400,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnDanger_Rockface-Rumble.mp3</filename>
+<filename>tracks/AutumnDanger_Rockface-Rumble.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -439,7 +439,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnBoss_Crocodile-Cacophony.mp3</filename>
+<filename>tracks/AutumnBoss_Crocodile-Cacophony.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -478,7 +478,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDay_Stickerbush-Symphony.mp3</filename>
+<filename>tracks/WinterDay_Stickerbush-Symphony.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -517,7 +517,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDusk_Water-World.mp3</filename>
+<filename>tracks/WinterDusk_Water-World.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -556,7 +556,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDuskAlt_In-A-Snow-Bound-Land.mp3</filename>
+<filename>tracks/WinterDuskAlt_In-A-Snow-Bound-Land.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -595,7 +595,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterNight_Aquatic-Ambience.mp3</filename>
+<filename>tracks/WinterNight_Aquatic-Ambience.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -634,7 +634,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDanger_Hot-Pursuit.mp3</filename>
+<filename>tracks/WinterDanger_Hot-Pursuit.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -673,7 +673,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterBoss_Primal-Rave.mp3</filename>
+<filename>tracks/WinterBoss_Primal-Rave.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -712,7 +712,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDay_The-Credits-Concerto.mp3</filename>
+<filename>tracks/SpringDay_The-Credits-Concerto.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -751,7 +751,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDusk_Jib-Jig.mp3</filename>
+<filename>tracks/SpringDusk_Jib-Jig.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -790,7 +790,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringNight_Forest-Interlude.mp3</filename>
+<filename>tracks/SpringNight_Forest-Interlude.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -829,7 +829,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDanger_Gang-Plank-Galleon.mp3</filename>
+<filename>tracks/SpringDanger_Gang-Plank-Galleon.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -868,7 +868,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDangerAlt_Snakey-Chantey.mp3</filename>
+<filename>tracks/SpringDangerAlt_Snakey-Chantey.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -907,7 +907,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringBoss_Boss-Bossanova.mp3</filename>
+<filename>tracks/SpringBoss_Boss-Bossanova.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -946,7 +946,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerDay_Cavern-Caprice.mp3</filename>
+<filename>tracks/SummerDay_Cavern-Caprice.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -985,7 +985,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerDusk_Swanky-Swing.mp3</filename>
+<filename>tracks/SummerDusk_Swanky-Swing.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1024,7 +1024,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerNight_Fear-Factory.mp3</filename>
+<filename>tracks/SummerNight_Fear-Factory.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1063,7 +1063,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerDanger_Funkys-Fugue.mp3</filename>
+<filename>tracks/SummerDanger_Funkys-Fugue.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1102,7 +1102,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerBoss_Boss-Boogie.mp3</filename>
+<filename>tracks/SummerBoss_Boss-Boogie.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1141,7 +1141,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Caves_Life-In-The-Mines.mp3</filename>
+<filename>tracks/Caves_Life-In-The-Mines.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1180,7 +1180,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/CavesDanger_Bad-Boss-Boogie.mp3</filename>
+<filename>tracks/CavesDanger_Bad-Boss-Boogie.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1219,7 +1219,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/CavesBoss_Mine-Cart-Madness.mp3</filename>
+<filename>tracks/CavesBoss_Mine-Cart-Madness.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1258,7 +1258,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Ruins_Flight-Of-The-Zinger.mp3</filename>
+<filename>tracks/Ruins_Flight-Of-The-Zinger.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1297,7 +1297,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/RuinsAlt_Misty-Menace.mp3</filename>
+<filename>tracks/RuinsAlt_Misty-Menace.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1336,7 +1336,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/RuinsDanger_Chase.mp3</filename>
+<filename>tracks/RuinsDanger_Chase.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1375,7 +1375,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/RuinsBoss_Nuts-And-Bolts.mp3</filename>
+<filename>tracks/RuinsBoss_Nuts-And-Bolts.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1414,7 +1414,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Sailing_Cascade-Capers.mp3</filename>
+<filename>tracks/Sailing_Cascade-Capers.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1453,202 +1453,7 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Lunar_Disco-Train.mp3</filename>
-<soundbankname>music_mod</soundbankname>
-<weight>100</weight>
-<percentagelocked>0</percentagelocked>
-</waveform>
-</sounddef>
-<sounddef>
-<name>/Boss4_Hot-Head-Bop</name>
-<guid>{b47c10cf-41b5-4977-820c-3f4a412d8252}</guid>
-<type>randomnorepeat</type>
-<playlistmode>0</playlistmode>
-<randomrepeatsounds>0</randomrepeatsounds>
-<randomrepeatsilences>0</randomrepeatsilences>
-<shuffleglobal>0</shuffleglobal>
-<sequentialrememberposition>0</sequentialrememberposition>
-<sequentialglobal>0</sequentialglobal>
-<spawntime_min>0</spawntime_min>
-<spawntime_max>0</spawntime_max>
-<spawn_max>1</spawn_max>
-<mode>0</mode>
-<pitch>0</pitch>
-<pitch_randmethod>1</pitch_randmethod>
-<pitch_random_min>0</pitch_random_min>
-<pitch_random_max>0</pitch_random_max>
-<pitch_randomization>0</pitch_randomization>
-<pitch_recalculate>0</pitch_recalculate>
-<volume_db>0</volume_db>
-<volume_randmethod>1</volume_randmethod>
-<volume_random_min>0</volume_random_min>
-<volume_random_max>0</volume_random_max>
-<volume_randomization>0</volume_randomization>
-<position_randomization_min>0</position_randomization_min>
-<position_randomization>0</position_randomization>
-<trigger_delay_min>0</trigger_delay_min>
-<trigger_delay_max>0</trigger_delay_max>
-<spawncount>0</spawncount>
-<notes></notes>
-<entrylistmode>1</entrylistmode>
-<waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss4_Hot-Head-Bop.mp3</filename>
-<soundbankname>music_mod</soundbankname>
-<weight>100</weight>
-<percentagelocked>0</percentagelocked>
-</waveform>
-</sounddef>
-<sounddef>
-<name>/Boss2_Haunted-Chase</name>
-<guid>{b515d0c2-b46e-481c-b951-9d20e36cacfa}</guid>
-<type>randomnorepeat</type>
-<playlistmode>0</playlistmode>
-<randomrepeatsounds>0</randomrepeatsounds>
-<randomrepeatsilences>0</randomrepeatsilences>
-<shuffleglobal>0</shuffleglobal>
-<sequentialrememberposition>0</sequentialrememberposition>
-<sequentialglobal>0</sequentialglobal>
-<spawntime_min>0</spawntime_min>
-<spawntime_max>0</spawntime_max>
-<spawn_max>1</spawn_max>
-<mode>0</mode>
-<pitch>0</pitch>
-<pitch_randmethod>1</pitch_randmethod>
-<pitch_random_min>0</pitch_random_min>
-<pitch_random_max>0</pitch_random_max>
-<pitch_randomization>0</pitch_randomization>
-<pitch_recalculate>0</pitch_recalculate>
-<volume_db>0</volume_db>
-<volume_randmethod>1</volume_randmethod>
-<volume_random_min>0</volume_random_min>
-<volume_random_max>0</volume_random_max>
-<volume_randomization>0</volume_randomization>
-<position_randomization_min>0</position_randomization_min>
-<position_randomization>0</position_randomization>
-<trigger_delay_min>0</trigger_delay_min>
-<trigger_delay_max>0</trigger_delay_max>
-<spawncount>0</spawncount>
-<notes></notes>
-<entrylistmode>1</entrylistmode>
-<waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss2_Haunted-Chase.mp3</filename>
-<soundbankname>music_mod</soundbankname>
-<weight>100</weight>
-<percentagelocked>0</percentagelocked>
-</waveform>
-</sounddef>
-<sounddef>
-<name>/Boss6_Bad-Bird-Rag</name>
-<guid>{8994849f-8eab-48fe-88f3-e6db6423f4b7}</guid>
-<type>randomnorepeat</type>
-<playlistmode>0</playlistmode>
-<randomrepeatsounds>0</randomrepeatsounds>
-<randomrepeatsilences>0</randomrepeatsilences>
-<shuffleglobal>0</shuffleglobal>
-<sequentialrememberposition>0</sequentialrememberposition>
-<sequentialglobal>0</sequentialglobal>
-<spawntime_min>0</spawntime_min>
-<spawntime_max>0</spawntime_max>
-<spawn_max>1</spawn_max>
-<mode>0</mode>
-<pitch>0</pitch>
-<pitch_randmethod>1</pitch_randmethod>
-<pitch_random_min>0</pitch_random_min>
-<pitch_random_max>0</pitch_random_max>
-<pitch_randomization>0</pitch_randomization>
-<pitch_recalculate>0</pitch_recalculate>
-<volume_db>0</volume_db>
-<volume_randmethod>1</volume_randmethod>
-<volume_random_min>0</volume_random_min>
-<volume_random_max>0</volume_random_max>
-<volume_randomization>0</volume_randomization>
-<position_randomization_min>0</position_randomization_min>
-<position_randomization>0</position_randomization>
-<trigger_delay_min>0</trigger_delay_min>
-<trigger_delay_max>0</trigger_delay_max>
-<spawncount>0</spawncount>
-<notes></notes>
-<entrylistmode>1</entrylistmode>
-<waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss6_Bad-Bird-Rag.mp3</filename>
-<soundbankname>music_mod</soundbankname>
-<weight>100</weight>
-<percentagelocked>0</percentagelocked>
-</waveform>
-</sounddef>
-<sounddef>
-<name>/Boss3_Lockjaws-Saga</name>
-<guid>{7e592e68-73e3-4ac2-9246-7c48b90fd8f2}</guid>
-<type>randomnorepeat</type>
-<playlistmode>0</playlistmode>
-<randomrepeatsounds>0</randomrepeatsounds>
-<randomrepeatsilences>0</randomrepeatsilences>
-<shuffleglobal>0</shuffleglobal>
-<sequentialrememberposition>0</sequentialrememberposition>
-<sequentialglobal>0</sequentialglobal>
-<spawntime_min>0</spawntime_min>
-<spawntime_max>0</spawntime_max>
-<spawn_max>1</spawn_max>
-<mode>0</mode>
-<pitch>0</pitch>
-<pitch_randmethod>1</pitch_randmethod>
-<pitch_random_min>0</pitch_random_min>
-<pitch_random_max>0</pitch_random_max>
-<pitch_randomization>0</pitch_randomization>
-<pitch_recalculate>0</pitch_recalculate>
-<volume_db>0</volume_db>
-<volume_randmethod>1</volume_randmethod>
-<volume_random_min>0</volume_random_min>
-<volume_random_max>0</volume_random_max>
-<volume_randomization>0</volume_randomization>
-<position_randomization_min>0</position_randomization_min>
-<position_randomization>0</position_randomization>
-<trigger_delay_min>0</trigger_delay_min>
-<trigger_delay_max>0</trigger_delay_max>
-<spawncount>0</spawncount>
-<notes></notes>
-<entrylistmode>1</entrylistmode>
-<waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss3_Lockjaws-Saga.mp3</filename>
-<soundbankname>music_mod</soundbankname>
-<weight>100</weight>
-<percentagelocked>0</percentagelocked>
-</waveform>
-</sounddef>
-<sounddef>
-<name>/Boss5_Northern-Hemispheres</name>
-<guid>{260d18b8-a6db-4d3f-99dc-e53dc658dcb9}</guid>
-<type>randomnorepeat</type>
-<playlistmode>0</playlistmode>
-<randomrepeatsounds>0</randomrepeatsounds>
-<randomrepeatsilences>0</randomrepeatsilences>
-<shuffleglobal>0</shuffleglobal>
-<sequentialrememberposition>0</sequentialrememberposition>
-<sequentialglobal>0</sequentialglobal>
-<spawntime_min>0</spawntime_min>
-<spawntime_max>0</spawntime_max>
-<spawn_max>1</spawn_max>
-<mode>0</mode>
-<pitch>0</pitch>
-<pitch_randmethod>1</pitch_randmethod>
-<pitch_random_min>0</pitch_random_min>
-<pitch_random_max>0</pitch_random_max>
-<pitch_randomization>0</pitch_randomization>
-<pitch_recalculate>0</pitch_recalculate>
-<volume_db>0</volume_db>
-<volume_randmethod>1</volume_randmethod>
-<volume_random_min>0</volume_random_min>
-<volume_random_max>0</volume_random_max>
-<volume_randomization>0</volume_randomization>
-<position_randomization_min>0</position_randomization_min>
-<position_randomization>0</position_randomization>
-<trigger_delay_min>0</trigger_delay_min>
-<trigger_delay_max>0</trigger_delay_max>
-<spawncount>0</spawncount>
-<notes></notes>
-<entrylistmode>1</entrylistmode>
-<waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss5_Northern-Hemispheres.mp3</filename>
+<filename>tracks/Lunar_Disco-Train.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1687,7 +1492,202 @@
 <notes></notes>
 <entrylistmode>1</entrylistmode>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss1_Krooks-March.mp3</filename>
+<filename>tracks/Boss1_Krooks-March.mp3</filename>
+<soundbankname>music_mod</soundbankname>
+<weight>100</weight>
+<percentagelocked>0</percentagelocked>
+</waveform>
+</sounddef>
+<sounddef>
+<name>/Boss2_Haunted-Chase</name>
+<guid>{b515d0c2-b46e-481c-b951-9d20e36cacfa}</guid>
+<type>randomnorepeat</type>
+<playlistmode>0</playlistmode>
+<randomrepeatsounds>0</randomrepeatsounds>
+<randomrepeatsilences>0</randomrepeatsilences>
+<shuffleglobal>0</shuffleglobal>
+<sequentialrememberposition>0</sequentialrememberposition>
+<sequentialglobal>0</sequentialglobal>
+<spawntime_min>0</spawntime_min>
+<spawntime_max>0</spawntime_max>
+<spawn_max>1</spawn_max>
+<mode>0</mode>
+<pitch>0</pitch>
+<pitch_randmethod>1</pitch_randmethod>
+<pitch_random_min>0</pitch_random_min>
+<pitch_random_max>0</pitch_random_max>
+<pitch_randomization>0</pitch_randomization>
+<pitch_recalculate>0</pitch_recalculate>
+<volume_db>0</volume_db>
+<volume_randmethod>1</volume_randmethod>
+<volume_random_min>0</volume_random_min>
+<volume_random_max>0</volume_random_max>
+<volume_randomization>0</volume_randomization>
+<position_randomization_min>0</position_randomization_min>
+<position_randomization>0</position_randomization>
+<trigger_delay_min>0</trigger_delay_min>
+<trigger_delay_max>0</trigger_delay_max>
+<spawncount>0</spawncount>
+<notes></notes>
+<entrylistmode>1</entrylistmode>
+<waveform>
+<filename>tracks/Boss2_Haunted-Chase.mp3</filename>
+<soundbankname>music_mod</soundbankname>
+<weight>100</weight>
+<percentagelocked>0</percentagelocked>
+</waveform>
+</sounddef>
+<sounddef>
+<name>/Boss3_Lockjaws-Saga</name>
+<guid>{7e592e68-73e3-4ac2-9246-7c48b90fd8f2}</guid>
+<type>randomnorepeat</type>
+<playlistmode>0</playlistmode>
+<randomrepeatsounds>0</randomrepeatsounds>
+<randomrepeatsilences>0</randomrepeatsilences>
+<shuffleglobal>0</shuffleglobal>
+<sequentialrememberposition>0</sequentialrememberposition>
+<sequentialglobal>0</sequentialglobal>
+<spawntime_min>0</spawntime_min>
+<spawntime_max>0</spawntime_max>
+<spawn_max>1</spawn_max>
+<mode>0</mode>
+<pitch>0</pitch>
+<pitch_randmethod>1</pitch_randmethod>
+<pitch_random_min>0</pitch_random_min>
+<pitch_random_max>0</pitch_random_max>
+<pitch_randomization>0</pitch_randomization>
+<pitch_recalculate>0</pitch_recalculate>
+<volume_db>0</volume_db>
+<volume_randmethod>1</volume_randmethod>
+<volume_random_min>0</volume_random_min>
+<volume_random_max>0</volume_random_max>
+<volume_randomization>0</volume_randomization>
+<position_randomization_min>0</position_randomization_min>
+<position_randomization>0</position_randomization>
+<trigger_delay_min>0</trigger_delay_min>
+<trigger_delay_max>0</trigger_delay_max>
+<spawncount>0</spawncount>
+<notes></notes>
+<entrylistmode>1</entrylistmode>
+<waveform>
+<filename>tracks/Boss3_Lockjaws-Saga.mp3</filename>
+<soundbankname>music_mod</soundbankname>
+<weight>100</weight>
+<percentagelocked>0</percentagelocked>
+</waveform>
+</sounddef>
+<sounddef>
+<name>/Boss4_Hot-Head-Bop</name>
+<guid>{b47c10cf-41b5-4977-820c-3f4a412d8252}</guid>
+<type>randomnorepeat</type>
+<playlistmode>0</playlistmode>
+<randomrepeatsounds>0</randomrepeatsounds>
+<randomrepeatsilences>0</randomrepeatsilences>
+<shuffleglobal>0</shuffleglobal>
+<sequentialrememberposition>0</sequentialrememberposition>
+<sequentialglobal>0</sequentialglobal>
+<spawntime_min>0</spawntime_min>
+<spawntime_max>0</spawntime_max>
+<spawn_max>1</spawn_max>
+<mode>0</mode>
+<pitch>0</pitch>
+<pitch_randmethod>1</pitch_randmethod>
+<pitch_random_min>0</pitch_random_min>
+<pitch_random_max>0</pitch_random_max>
+<pitch_randomization>0</pitch_randomization>
+<pitch_recalculate>0</pitch_recalculate>
+<volume_db>0</volume_db>
+<volume_randmethod>1</volume_randmethod>
+<volume_random_min>0</volume_random_min>
+<volume_random_max>0</volume_random_max>
+<volume_randomization>0</volume_randomization>
+<position_randomization_min>0</position_randomization_min>
+<position_randomization>0</position_randomization>
+<trigger_delay_min>0</trigger_delay_min>
+<trigger_delay_max>0</trigger_delay_max>
+<spawncount>0</spawncount>
+<notes></notes>
+<entrylistmode>1</entrylistmode>
+<waveform>
+<filename>tracks/Boss4_Hot-Head-Bop.mp3</filename>
+<soundbankname>music_mod</soundbankname>
+<weight>100</weight>
+<percentagelocked>0</percentagelocked>
+</waveform>
+</sounddef>
+<sounddef>
+<name>/Boss5_Northern-Hemispheres</name>
+<guid>{260d18b8-a6db-4d3f-99dc-e53dc658dcb9}</guid>
+<type>randomnorepeat</type>
+<playlistmode>0</playlistmode>
+<randomrepeatsounds>0</randomrepeatsounds>
+<randomrepeatsilences>0</randomrepeatsilences>
+<shuffleglobal>0</shuffleglobal>
+<sequentialrememberposition>0</sequentialrememberposition>
+<sequentialglobal>0</sequentialglobal>
+<spawntime_min>0</spawntime_min>
+<spawntime_max>0</spawntime_max>
+<spawn_max>1</spawn_max>
+<mode>0</mode>
+<pitch>0</pitch>
+<pitch_randmethod>1</pitch_randmethod>
+<pitch_random_min>0</pitch_random_min>
+<pitch_random_max>0</pitch_random_max>
+<pitch_randomization>0</pitch_randomization>
+<pitch_recalculate>0</pitch_recalculate>
+<volume_db>0</volume_db>
+<volume_randmethod>1</volume_randmethod>
+<volume_random_min>0</volume_random_min>
+<volume_random_max>0</volume_random_max>
+<volume_randomization>0</volume_randomization>
+<position_randomization_min>0</position_randomization_min>
+<position_randomization>0</position_randomization>
+<trigger_delay_min>0</trigger_delay_min>
+<trigger_delay_max>0</trigger_delay_max>
+<spawncount>0</spawncount>
+<notes></notes>
+<entrylistmode>1</entrylistmode>
+<waveform>
+<filename>tracks/Boss5_Northern-Hemispheres.mp3</filename>
+<soundbankname>music_mod</soundbankname>
+<weight>100</weight>
+<percentagelocked>0</percentagelocked>
+</waveform>
+</sounddef>
+<sounddef>
+<name>/Boss6_Bad-Bird-Rag</name>
+<guid>{8994849f-8eab-48fe-88f3-e6db6423f4b7}</guid>
+<type>randomnorepeat</type>
+<playlistmode>0</playlistmode>
+<randomrepeatsounds>0</randomrepeatsounds>
+<randomrepeatsilences>0</randomrepeatsilences>
+<shuffleglobal>0</shuffleglobal>
+<sequentialrememberposition>0</sequentialrememberposition>
+<sequentialglobal>0</sequentialglobal>
+<spawntime_min>0</spawntime_min>
+<spawntime_max>0</spawntime_max>
+<spawn_max>1</spawn_max>
+<mode>0</mode>
+<pitch>0</pitch>
+<pitch_randmethod>1</pitch_randmethod>
+<pitch_random_min>0</pitch_random_min>
+<pitch_random_max>0</pitch_random_max>
+<pitch_randomization>0</pitch_randomization>
+<pitch_recalculate>0</pitch_recalculate>
+<volume_db>0</volume_db>
+<volume_randmethod>1</volume_randmethod>
+<volume_random_min>0</volume_random_min>
+<volume_random_max>0</volume_random_max>
+<volume_randomization>0</volume_randomization>
+<position_randomization_min>0</position_randomization_min>
+<position_randomization>0</position_randomization>
+<trigger_delay_min>0</trigger_delay_min>
+<trigger_delay_max>0</trigger_delay_max>
+<spawncount>0</spawncount>
+<notes></notes>
+<entrylistmode>1</entrylistmode>
+<waveform>
+<filename>tracks/Boss6_Bad-Bird-Rag.mp3</filename>
 <soundbankname>music_mod</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
@@ -1746,7 +1746,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>0</volume_db>
+<volume_db>-4</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -3287,7 +3287,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.5,0.501187,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -4800,7 +4800,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>-2</volume_db>
+<volume_db>-4</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -4937,7 +4937,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.5,0.630957,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5123,7 +5123,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.5,0.630957,0,1</point>
+<point>0.5,0.501187,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5309,7 +5309,7 @@
 <colour>#ff0000</colour>
 <point>0,0,1,1</point>
 <point>0.102389,0,0,1</point>
-<point>0.5,0.501187,0,1</point>
+<point>0.5,0.398107,0,1</point>
 <parametername>intensity</parametername>
 <controlparameter>intensity</controlparameter>
 <_PC_enable>1</_PC_enable>
@@ -5976,7 +5976,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>-8</volume_db>
+<volume_db>-6</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -6120,7 +6120,7 @@
 <car_rpmsmooth>0.075</car_rpmsmooth>
 <car_loadsmooth>0.05</car_loadsmooth>
 <car_loadscale>6</car_loadscale>
-<volume_db>-2</volume_db>
+<volume_db>-4</volume_db>
 <pitch>0</pitch>
 <pitch_units>Octaves</pitch_units>
 <pitch_randomization>0</pitch_randomization>
@@ -11384,8 +11384,8 @@
 <_IOS_banktype>DecompressedSample</_IOS_banktype>
 <notes></notes>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnBoss_Crocodile-Cacophony.mp3</filename>
-<guid>{e0ebdf0f-ba56-4856-a756-4b12ca641c25}</guid>
+<filename>tracks/AutumnBoss_Crocodile-Cacophony.mp3</filename>
+<guid>{9c3a14a9-cc05-4b8a-8050-0f6d06cb5677}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11429,8 +11429,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnDanger_Rockface-Rumble.mp3</filename>
-<guid>{f81a53bc-a4e8-4bba-a0db-4f70209f1c86}</guid>
+<filename>tracks/AutumnDanger_Rockface-Rumble.mp3</filename>
+<guid>{c5e73aca-bcb6-45ce-850c-823f1419c2db}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11474,8 +11474,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnDay_DK-Island-Swing.mp3</filename>
-<guid>{95194842-98d1-4b16-b4e6-821db2053b88}</guid>
+<filename>tracks/AutumnDay_DK-Island-Swing.mp3</filename>
+<guid>{039f56d0-d87a-40f7-a2a2-39f14e48bf98}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11519,8 +11519,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnDusk_Treetop-Tumble.mp3</filename>
-<guid>{5fc13770-6a83-47aa-9850-286bd7122050}</guid>
+<filename>tracks/AutumnDusk_Treetop-Tumble.mp3</filename>
+<guid>{43a976f3-18cd-4e63-81f0-54f2d01a1b32}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11564,8 +11564,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnNightAlt-Bayou-Boogie.mp3</filename>
-<guid>{44aba92d-0806-491c-9f45-ec7465a75395}</guid>
+<filename>tracks/AutumnNightAlt-Bayou-Boogie.mp3</filename>
+<guid>{5d2e3ebc-d981-421a-9d0c-f02f6549b8da}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11609,8 +11609,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/AutumnNight_K-Rool-Returns.mp3</filename>
-<guid>{3cd15b7b-dbe4-453e-af5a-15c29c673f17}</guid>
+<filename>tracks/AutumnNight_K-Rool-Returns.mp3</filename>
+<guid>{76639209-01e9-4c01-898f-d7b3cd40814a}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11654,8 +11654,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss1_Krooks-March.mp3</filename>
-<guid>{68928250-6ac9-452b-9c5e-de65942577ff}</guid>
+<filename>tracks/Boss1_Krooks-March.mp3</filename>
+<guid>{81abdac7-5b8b-4272-a26c-77f45d514d4f}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11699,8 +11699,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss2_Haunted-Chase.mp3</filename>
-<guid>{cee54545-69c3-43e9-b587-6c475a41df88}</guid>
+<filename>tracks/Boss2_Haunted-Chase.mp3</filename>
+<guid>{ce145085-cf03-4fd9-b22f-8353639cef60}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11744,8 +11744,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss3_Lockjaws-Saga.mp3</filename>
-<guid>{73c1d6f6-78a7-462b-babf-77859b18f02a}</guid>
+<filename>tracks/Boss3_Lockjaws-Saga.mp3</filename>
+<guid>{ae0eca90-7307-4512-be5a-8393b359ffd0}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11789,8 +11789,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss4_Hot-Head-Bop.mp3</filename>
-<guid>{2be74e16-ec28-429e-97c8-920c0afba341}</guid>
+<filename>tracks/Boss4_Hot-Head-Bop.mp3</filename>
+<guid>{cb1b2596-aa2a-4848-be8f-0305268c6a7e}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11834,8 +11834,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss5_Northern-Hemispheres.mp3</filename>
-<guid>{1f129188-57ee-4141-baa9-383f360277dd}</guid>
+<filename>tracks/Boss5_Northern-Hemispheres.mp3</filename>
+<guid>{6eacd3f9-6f29-4c14-926d-88d136b99cc3}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11879,8 +11879,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Boss6_Bad-Bird-Rag.mp3</filename>
-<guid>{1a4ba990-c065-45e7-9e35-b5f38bb35007}</guid>
+<filename>tracks/Boss6_Bad-Bird-Rag.mp3</filename>
+<guid>{f52ccee4-5635-43dd-b20f-1e630a992cc1}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11924,8 +11924,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/CavesBoss_Mine-Cart-Madness.mp3</filename>
-<guid>{6843c45a-4955-4e4d-b637-7f9bc00fec73}</guid>
+<filename>tracks/CavesBoss_Mine-Cart-Madness.mp3</filename>
+<guid>{cea8282a-75c0-4c77-bd3c-d1d0c7e00480}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -11969,8 +11969,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/CavesDanger_Bad-Boss-Boogie.mp3</filename>
-<guid>{402170e6-fa3e-43ad-a012-83f04a3e706d}</guid>
+<filename>tracks/CavesDanger_Bad-Boss-Boogie.mp3</filename>
+<guid>{429628c6-20f6-4160-9c9d-b4989d955507}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12014,8 +12014,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Caves_Life-In-The-Mines.mp3</filename>
-<guid>{e80fc429-3330-45bc-b9de-87815744fd5d}</guid>
+<filename>tracks/Caves_Life-In-The-Mines.mp3</filename>
+<guid>{01d7a64b-84bf-4077-b4d3-82e3504896f8}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12059,8 +12059,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/FE2_Funky-The-Main-Monkey.mp3</filename>
-<guid>{603d51d2-0d4b-4ac7-b828-2482d4a8008e}</guid>
+<filename>tracks/FE2_Funky-The-Main-Monkey.mp3</filename>
+<guid>{67b1c88a-6b17-4c60-b4fd-70effbc5b03c}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12104,8 +12104,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/FE_Theme.mp3</filename>
-<guid>{1c848d79-c5ac-4f24-8dcd-2a3edaaa0f2c}</guid>
+<filename>tracks/FE_Theme.mp3</filename>
+<guid>{af16013d-0a51-4494-864f-d05524086bbc}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12149,8 +12149,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Lunar_Disco-Train.mp3</filename>
-<guid>{1ce3d969-bcbd-40d1-b537-dd018f440d30}</guid>
+<filename>tracks/Lunar_Disco-Train.mp3</filename>
+<guid>{6444df51-ae7e-4418-bf43-00791d9ab38b}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12194,8 +12194,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/RuinsAlt_Misty-Menace.mp3</filename>
-<guid>{9d66d646-d682-40d7-9dd7-0d0146156583}</guid>
+<filename>tracks/RuinsAlt_Misty-Menace.mp3</filename>
+<guid>{143694fc-4716-4f49-bbff-a0c8c3768f37}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12239,8 +12239,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/RuinsBoss_Nuts-And-Bolts.mp3</filename>
-<guid>{e4c57f03-f27f-4516-9d0e-4ce97d3bf47c}</guid>
+<filename>tracks/RuinsBoss_Nuts-And-Bolts.mp3</filename>
+<guid>{2f29497d-505a-4cd1-963a-81acf002b808}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12284,8 +12284,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/RuinsDanger_Chase.mp3</filename>
-<guid>{ad8c8c4c-2e10-4a7f-879e-48056020b360}</guid>
+<filename>tracks/RuinsDanger_Chase.mp3</filename>
+<guid>{e72d194a-1787-4a75-93b7-62b8b8cfffec}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12329,8 +12329,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Ruins_Flight-Of-The-Zinger.mp3</filename>
-<guid>{ca89380e-b11f-45ee-a440-e4fd6049f60b}</guid>
+<filename>tracks/Ruins_Flight-Of-The-Zinger.mp3</filename>
+<guid>{5ef2d2e9-e2c8-4afc-a2dd-9c673f918fdb}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12374,8 +12374,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/Sailing_Cascade-Capers.mp3</filename>
-<guid>{957bb23c-71c4-4ba5-9c68-b585e0f1400e}</guid>
+<filename>tracks/Sailing_Cascade-Capers.mp3</filename>
+<guid>{9caa08ac-d927-4645-a9b0-2e1c2da16f65}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12419,8 +12419,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringBoss_Boss-Bossanova.mp3</filename>
-<guid>{905c5757-68cb-4a43-8474-48d2379878b5}</guid>
+<filename>tracks/SpringBoss_Boss-Bossanova.mp3</filename>
+<guid>{436ef2bb-cbab-46dc-8ee5-ace5bb98aa0e}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12464,8 +12464,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDangerAlt_Snakey-Chantey.mp3</filename>
-<guid>{435e6c2a-e60d-4566-b6e4-aebf6cbf3181}</guid>
+<filename>tracks/SpringDangerAlt_Snakey-Chantey.mp3</filename>
+<guid>{8654caef-8a31-4aee-a395-32d75764e51b}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12509,8 +12509,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDanger_Gang-Plank-Galleon.mp3</filename>
-<guid>{70c894a0-49cd-4be7-bd90-bfa7847bfaaa}</guid>
+<filename>tracks/SpringDanger_Gang-Plank-Galleon.mp3</filename>
+<guid>{16da8f1e-bb3a-433a-9038-576b882393c3}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12554,8 +12554,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDay_The-Credits-Concerto.mp3</filename>
-<guid>{c797d04c-fe9d-4575-b301-808cc7e7a103}</guid>
+<filename>tracks/SpringDay_The-Credits-Concerto.mp3</filename>
+<guid>{aef13205-de40-4ddc-96a8-9c1ad1157baf}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12599,8 +12599,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringDusk_Jib-Jig.mp3</filename>
-<guid>{080978aa-d3dd-40ef-841d-e068c77fe6db}</guid>
+<filename>tracks/SpringDusk_Jib-Jig.mp3</filename>
+<guid>{9d751fe1-1afa-4449-a2d8-402e15dfd302}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12644,8 +12644,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SpringNight_Forest-Interlude.mp3</filename>
-<guid>{2b685f1a-94fa-427e-a8cd-52641480c6fd}</guid>
+<filename>tracks/SpringNight_Forest-Interlude.mp3</filename>
+<guid>{821ea67f-ce97-4d3f-b047-3f319e377711}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12689,8 +12689,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerBoss_Boss-Boogie.mp3</filename>
-<guid>{8be52bb9-afd5-464c-b5fb-1a44d111eadd}</guid>
+<filename>tracks/SummerBoss_Boss-Boogie.mp3</filename>
+<guid>{38e22781-2a1e-4f03-b04c-8461ea889c1a}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12734,8 +12734,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerDanger_Funkys-Fugue.mp3</filename>
-<guid>{1bc62787-5da2-4019-9efd-1f62c22140f5}</guid>
+<filename>tracks/SummerDanger_Funkys-Fugue.mp3</filename>
+<guid>{eec75037-c7df-4e71-9b07-ebd79f9240c0}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12779,8 +12779,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerDay_Cavern-Caprice.mp3</filename>
-<guid>{f1cb9404-0b6b-49b4-b0d9-f1df5daffd91}</guid>
+<filename>tracks/SummerDay_Cavern-Caprice.mp3</filename>
+<guid>{4e942e5a-5e4f-4523-aec5-585c86dacd2d}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12824,8 +12824,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerDusk_Swanky-Swing.mp3</filename>
-<guid>{10d587e8-2dcd-4362-867c-e98ffa5c3c14}</guid>
+<filename>tracks/SummerDusk_Swanky-Swing.mp3</filename>
+<guid>{6ec9d460-fd1c-4311-a981-e3c3c9d11ea7}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12869,8 +12869,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/SummerNight_Fear-Factory.mp3</filename>
-<guid>{ac3009f8-4327-45cf-9d5f-7eddcd0f9125}</guid>
+<filename>tracks/SummerNight_Fear-Factory.mp3</filename>
+<guid>{fab0856f-d582-4252-9b11-4b573e63848d}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12914,8 +12914,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterBoss_Primal-Rave.mp3</filename>
-<guid>{6ef46163-9c5f-4d92-a70a-e501854ea92b}</guid>
+<filename>tracks/WinterBoss_Primal-Rave.mp3</filename>
+<guid>{ffee81d2-a4ef-4e90-a9c6-0be6893568b3}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -12959,8 +12959,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDanger_Hot-Pursuit.mp3</filename>
-<guid>{b195ed47-c1e6-44f0-97a8-f22f59f49ac6}</guid>
+<filename>tracks/WinterDanger_Hot-Pursuit.mp3</filename>
+<guid>{1b98ffee-017f-4208-be98-199a3fe759c7}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -13004,8 +13004,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDay_Stickerbush-Symphony.mp3</filename>
-<guid>{c59a491f-0abe-4b6b-96b4-efd729befe74}</guid>
+<filename>tracks/WinterDay_Stickerbush-Symphony.mp3</filename>
+<guid>{b4e90d7c-a6cc-44bf-8ea9-21c259d5e02a}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -13049,8 +13049,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDuskAlt_In-A-Snow-Bound-Land.mp3</filename>
-<guid>{9ccc3060-87bf-4b1f-a403-b7a1b29e66f8}</guid>
+<filename>tracks/WinterDuskAlt_In-A-Snow-Bound-Land.mp3</filename>
+<guid>{b7cce3e8-2daf-45d9-95da-5ab111b47746}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -13094,8 +13094,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterDusk_Water-World.mp3</filename>
-<guid>{1ec52c4c-cc9f-462d-94d5-2bbc2fc64925}</guid>
+<filename>tracks/WinterDusk_Water-World.mp3</filename>
+<guid>{9491d09a-fe77-495d-b5b1-cc33214901e6}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -13139,8 +13139,8 @@
 <notes></notes>
 </waveform>
 <waveform>
-<filename>../../../../users/michael/documents/vs code projects/dont-starve-dkc-music-pack/sound_source/tracks/WinterNight_Aquatic-Ambience.mp3</filename>
-<guid>{88f7a302-948d-4b89-a2c3-1ca226b8247c}</guid>
+<filename>tracks/WinterNight_Aquatic-Ambience.mp3</filename>
+<guid>{659cb19e-6390-4dca-a962-7ccf5fa89e5a}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>
 <deffreq>44100</deffreq>
@@ -13616,7 +13616,7 @@
 <currentplatform>PC</currentplatform>
 <_PC_encryptionkey></_PC_encryptionkey>
 <_PC_builddirectory>C:/Users/Michael/Documents/VS Code Projects/dont-starve-dkc-music-pack/sound</_PC_builddirectory>
-<_PC_audiosourcedirectory>C:/klei/DoNotStarve/contentsrc/sound</_PC_audiosourcedirectory>
+<_PC_audiosourcedirectory>C:/Users/Michael/Documents/VS Code Projects/dont-starve-dkc-music-pack/sound_source</_PC_audiosourcedirectory>
 <_PC_prebuildcommands></_PC_prebuildcommands>
 <_PC_postbuildcommands></_PC_postbuildcommands>
 <_PC_buildinteractivemusic>Yes</_PC_buildinteractivemusic>

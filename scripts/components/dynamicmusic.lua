@@ -516,6 +516,7 @@ local function StartTriggeredEvent(player, data)
 end
 
 local function StartTriggeredWater(player, data)
+    print("StartTriggeredWater fired")
     if player:GetCurrentPlatform() then
         _isBusyDirty = true
         StopContinuous()
