@@ -221,18 +221,18 @@ local _activatedPlayer = nil  -- Player that activated this component, used for 
 
 local _busyTask = nil
 local _busyTheme = nil
-local _isBusyDirty = nil  -- Tracks whether the currently-selected busy music is outdated (important when we shouldn't play the new track immediately)
-local _extendTime = nil
+local _isBusyDirty = false  -- Tracks whether the currently-selected busy music is outdated (important when we shouldn't play the new track immediately)
+local _stopTime = 0         -- Tracks the time when triggered music should be stopped (not itself a timer)
 local _dangerTask = nil
-local _triggeredLevel = nil       -- Tracks the level of current triggered event encounter
-local _triggeredMusicPhase = nil  -- Used to determine whether we should switch music on a new event level (e.g. boss phase change)
-local _inCaves = false            -- When in the cave layer
-local _inRuins = false            -- When in ruins
-local _nightmarePhase = nil       -- Current nightmare cycle phase
-local _inLunar = false            -- When on lunar island or in lunar grotto
+local _triggeredLevel = -1       -- Tracks the level of current triggered event encounter
+local _triggeredMusicPhase = -1  -- Used to determine whether we should switch music on a new event level (e.g. boss phase change)
+local _inCaves = false           -- When in the cave layer
+local _inRuins = false           -- When in ruins
+local _nightmarePhase = nil      -- Current nightmare cycle phase
+local _inLunar = false           -- When on lunar island or in lunar grotto
 
-local _delayActive = false       -- Tracks if a forced delay (e.g. from a stinger) is active
-local _hasInspirationBuff = nil  -- Wigfrid inspiration buff
+local _delayActive = false         -- Tracks if a forced delay (e.g. from a stinger) is active
+local _hasInspirationBuff = false  -- Wigfrid inspiration buff
 
 --------------------------------------------------------------------------
 --[[ Reusable music constrols and helper functions ]]
@@ -243,7 +243,7 @@ local function StopContinuous()
         _busyTask:Cancel()
 	end
 	_busyTask = nil
-	_extendTime = 0
+	_stopTime = 0
 	_soundEmitter:SetParameter("busy", "intensity", 0)  -- Mute music, do not restart; sound in FMOD should cover intensity 0 for this to work correctly
 end
 
@@ -254,24 +254,24 @@ local function StopBusy(inst, isTimeout)
 
     if not isTimeout then
         _busyTask:Cancel()
-    elseif _extendTime > 0 then
+    elseif _stopTime > 0 then
         local time = GetTime()
-        if time < _extendTime then
-            _busyTask = inst:DoTaskInTime(_extendTime - time, StopBusy, true)
-            _extendTime = 0
+        if time < _stopTime then
+            _busyTask = inst:DoTaskInTime(_stopTime - time, StopBusy, true)
+            _stopTime = 0
             return
         end
     end
     _busyTask = nil
-    _extendTime = 0
+    _stopTime = 0
     _soundEmitter:SetParameter("busy", "intensity", 0)
 end
 
 -- TODO maybe if I'm not lazy restructure some constants and pass in music as param instead?
 local function StartBusy(player)
     if _busyTask ~= nil and not _isBusyDirty then
-        _extendTime = GetTime() + 15
-    elseif _dangerTask == nil and not _delayActive and (CONTINUOUS_MODE or _extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
+        _stopTime = GetTime() + 15
+    elseif _dangerTask == nil and not _delayActive and (CONTINUOUS_MODE or _stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
 
         -- Check if player is in a lunar biome and assign lunar music
         if _inLunar then
@@ -323,11 +323,12 @@ local function StartBusy(player)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(15, StopBusy, true)
-        _extendTime = 0
+        _stopTime = 0
     end
 end
 
 local function StartOcean(player)
+    print("StartOcean called")
     local function StopOcean(...)
         StopBusy(...)
         if CONTINUOUS_MODE then
@@ -336,8 +337,8 @@ local function StartOcean(player)
         end
     end
     if _busyTask ~= nil and not _isBusyDirty then
-        _extendTime = GetTime() + 15
-    elseif _dangerTask == nil and (_extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
+        _stopTime = GetTime() + 15
+    elseif _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
         if _busyTheme ~= BUSY_THEMES.OCEAN or _isBusyDirty then
             _isBusyDirty = false
             _soundEmitter:KillSound("busy")
@@ -347,12 +348,12 @@ local function StartOcean(player)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(30, StopOcean, true)
-        _extendTime = 0
+        _stopTime = 0
     end
 end
 
 local function StartBusyTheme(player, theme, sound, duration, extendtime)
-    if _dangerTask == nil and (_busyTheme ~= theme or _extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
+    if _dangerTask == nil and (_busyTheme ~= theme or _stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
         if _busyTask then
             _busyTask:Cancel()
             _busyTask = nil
@@ -365,17 +366,17 @@ local function StartBusyTheme(player, theme, sound, duration, extendtime)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(duration, StopBusy, true)
-        _extendTime = extendtime or 0
+        _stopTime = extendtime or 0
     end
 end
 
 local function StartFeasting(player)
     if _busyTask ~= nil then
-        _extendTime = 0
+        _stopTime = 0
         _busyTask:Cancel()
         _busyTask = nil
         _busyTask = inst:DoTaskInTime(5, StopBusy, true)
-    elseif _dangerTask == nil and (_extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
+    elseif _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
 
         if _busyTheme ~= BUSY_THEMES.FEAST then
             _soundEmitter:KillSound("busy")
@@ -385,13 +386,13 @@ local function StartFeasting(player)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(5, StopBusy, true)
-        _extendTime = 0
+        _stopTime = 0
     end
 end
 
 local function ExtendBusy()
     if _busyTask ~= nil then
-        _extendTime = math.max(_extendTime, GetTime() + 10)
+        _stopTime = math.max(_stopTime, GetTime() + 10)
     end
 end
 
@@ -402,18 +403,18 @@ local function StopDanger(inst, istimeout)
     
     if not istimeout then
         _dangerTask:Cancel()
-    elseif _extendTime > 0 then
+    elseif _stopTime > 0 then
         local time = GetTime()
-        if time < _extendTime then
-            _dangerTask = inst:DoTaskInTime(_extendTime - time, StopDanger, true)
-            _extendTime = 0
+        if time < _stopTime then
+            _dangerTask = inst:DoTaskInTime(_stopTime - time, StopDanger, true)
+            _stopTime = 0
             return
         end
     end
     _dangerTask = nil
-    _triggeredLevel = nil
-    _triggeredMusicPhase = nil
-    _extendTime = 0
+    _triggeredLevel = -1
+    _triggeredMusicPhase = -1
+    _stopTime = 0
     _soundEmitter:KillSound("danger")
     if CONTINUOUS_MODE then
         StartBusy(_activatedPlayer)
@@ -424,7 +425,7 @@ local EPIC_TAGS = { "epic" }
 local NO_EPIC_TAGS = { "noepicmusic" }
 local function StartDanger(player)
     if _dangerTask ~= nil then
-        _extendTime = GetTime() + 10
+        _stopTime = GetTime() + 10
     elseif _isEnabled then
         StopContinuous()
         local x, y, z = player.Transform:GetWorldPosition()
@@ -443,9 +444,9 @@ local function StartDanger(player)
                 "danger")
         end
         _dangerTask = inst:DoTaskInTime(10, StopDanger, true)
-        _triggeredLevel = nil
-        _triggeredMusicPhase = nil
-        _extendTime = 0
+        _triggeredLevel = -1
+        _triggeredMusicPhase = -1
+        _stopTime = 0
 
 		if _hasInspirationBuff then
 			_soundEmitter:SetParameter("danger", "wathgrithr_intensity", _hasInspirationBuff)
@@ -456,11 +457,13 @@ end
 local function IsInRuins(player)
     return player.components.areaaware ~= nil
         and player.components.areaaware:CurrentlyInTag("Nightmare")
+        or false  -- Fallback, CurrentlyInTag can return nil if not considered in any area (e.g. in the ocean)
 end
 
 local function IsInLunar(player)
     return player.components.areaaware ~= nil
         and player.components.areaaware:CurrentlyInTag("lunacyarea")  -- Includes Lunar Island and Lunar Grotto
+        or false
 end
 
 --------------------------------------------------------------------------
@@ -469,13 +472,12 @@ end
 
 local function StartTriggeredEvent(player, data)
     if data == nil then
-        print("WARN: StartTriggeredEvent() - supplied data was nil")
         return
     end
 
     local level = math.max(1, math.floor(data.level or 1))
-    if _triggeredLevel == level then
-        _extendTime = math.max(_extendTime, GetTime() + (data.duration or 10))
+    if level == _triggeredLevel then
+        _stopTime = math.max(_stopTime, GetTime() + (data.duration or 10))
         return
     elseif not _isEnabled then
         return
@@ -490,7 +492,7 @@ local function StartTriggeredEvent(player, data)
         musicPath = eventTable[level].path or eventTable[1].path
     end
     if musicPhase < 0 or musicPhase == _triggeredMusicPhase then
-        _extendTime = math.max(_extendTime, GetTime() + (data.duration or 10))
+        _stopTime = math.max(_stopTime, GetTime() + (data.duration or 10))
         return
     end
 
@@ -512,11 +514,11 @@ local function StartTriggeredEvent(player, data)
     _dangerTask = inst:DoTaskInTime(data.duration or 10, StopDanger, true)
     _triggeredLevel = level
     _triggeredMusicPhase = musicPhase
-    _extendTime = 0
+    _stopTime = 0
 end
 
 local function StartTriggeredWater(player, data)
-    print("StartTriggeredWater fired")
+    print("StartTriggeredWater fired with value data=" .. (data or "none"))  -- TODO testing
     if player:GetCurrentPlatform() then
         _isBusyDirty = true
         StopContinuous()
@@ -533,7 +535,7 @@ end
 
 -- **Currently disabled, event listener removed
 local function StartTraining(player)
-    if _dangerTask == nil and (_extendTime == 0 or GetTime() >= _extendTime) and _isEnabled and _busyTheme ~= BUSY_THEMES.RACE then
+    if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled and _busyTheme ~= BUSY_THEMES.RACE then
         if _busyTask then
             _busyTask:Cancel()
             _busyTask = nil
@@ -546,13 +548,13 @@ local function StartTraining(player)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(5, StopBusy, true)
-        _extendTime = 0
+        _stopTime = 0
     end
 end
 
 -- **Currently disabled, event listener removed
 local function StartRacing(player)
-    if _dangerTask == nil and (_extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
+    if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
         if _busyTask then
             _busyTask:Cancel()
             _busyTask = nil
@@ -565,13 +567,13 @@ local function StartRacing(player)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(5, StopBusy, true)
-        _extendTime = 0
+        _stopTime = 0
     end
 end
 
 -- **Currently disabled, event listener removed
 local function StartHermit(player)
-    if _dangerTask == nil and (_extendTime == 0 or GetTime() >= _extendTime) and _isEnabled then
+    if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
         if _busyTask then
             _busyTask:Cancel()
             _busyTask = nil
@@ -584,7 +586,7 @@ local function StartHermit(player)
 
         _soundEmitter:SetParameter("busy", "intensity", 1)
         _busyTask = inst:DoTaskInTime(30, StopBusy, true)
-        _extendTime = 0
+        _stopTime = 0
     end
 end
 
@@ -664,7 +666,7 @@ local function OnInsane()
         _soundEmitter:PlaySound("dontstarve/sanity/gonecrazy_stinger")
         StopContinuous()
         --Repurpose this as a delay before stingers or busy can start again
-        _extendTime = GetTime() + 15
+        _stopTime = GetTime() + 15
 		if CONTINUOUS_MODE then
 			_activatedPlayer:DoTaskInTime(12, function(player)
 				StartBusy(player)
@@ -674,21 +676,19 @@ local function OnInsane()
 end
 
 local function OnChangeArea(player)
-	if player.components.areaaware then
-		local ruins = IsInRuins(player)
-        local lunar = IsInLunar(player)
-		if ruins ~= _inRuins then
-			_inRuins = ruins
-			_isBusyDirty = true
-		end
-        if lunar ~= _inLunar then
-			_inLunar = lunar
-			_isBusyDirty = true
-		end
-        if _isBusyDirty and CONTINUOUS_MODE then
-            StartBusy(_activatedPlayer)
-        end
-	end
+    local ruins = IsInRuins(player)
+    local lunar = IsInLunar(player)
+    if ruins ~= _inRuins then
+        _inRuins = ruins
+        _isBusyDirty = true
+    end
+    if lunar ~= _inLunar then
+        _inLunar = lunar
+        _isBusyDirty = true
+    end
+    if _isBusyDirty and CONTINUOUS_MODE then
+        StartBusy(_activatedPlayer)
+    end
 end
 
 local function OnPhase(inst, phase)
@@ -699,15 +699,14 @@ local function OnPhase(inst, phase)
 
     -- Exit early if currently busy or in danger
     local time
-    if _busyTask == nil and _extendTime ~= 0 then
+    if _busyTask == nil and _stopTime ~= 0 then
         time = GetTime()
-        if time < _extendTime then
+        if time < _stopTime then
             return
         end
     end
 
     -- Play stingers if dawn or dusk. Disabled with continuous mode as it just sounds really bad.
-    -- TODO test these values and see if they sound stupid
     local musicDelay = 2
     if not CONTINUOUS_MODE then
         if phase == "day" then
@@ -737,7 +736,7 @@ local function OnPhase(inst, phase)
 	StopContinuous()
 
     --Repurpose this as a delay before stingers or busy can start again
-    _extendTime = (time or GetTime()) + 15
+    _stopTime = (time or GetTime()) + 15
 end
 
 local function OnNightmarePhase(inst, phase)
@@ -789,7 +788,7 @@ local function StartPlayerListeners(player)
         inst:ListenForEvent("playcarnivalmusic", StartCarnivalMusic, player)
         inst:ListenForEvent("hasinspirationbuff", OnHasInspirationBuff, player)
     end
-    inst:ListenForEvent("changearea", OnChangeArea, player)
+    inst:ListenForEvent("changearea", OnChangeArea, player)  -- Note: Pushed on initialization too
 end
 
 local function StopPlayerListeners(player)
@@ -814,7 +813,6 @@ end
 local function StartSoundEmitter()
     if _soundEmitter == nil then
         _soundEmitter = TheFocalPoint.SoundEmitter
-        _extendTime = 0
         _isBusyDirty = true
         if not _inCaves then
             inst:WatchWorldState("phase", OnPhase)
@@ -836,10 +834,10 @@ local function StopSoundEmitter()
         inst:StopWatchingWorldState("nightmarephase", OnNightmarePhase)
         _nightmarePhase = NIGHTMARE_PHASES.CALM
 		_busyTheme = nil
-        _isBusyDirty = nil
-        _extendTime = nil
+        _isBusyDirty = false
+        _stopTime = 0
         _soundEmitter = nil
-		_hasInspirationBuff = nil
+		_hasInspirationBuff = false
     end
 end
 
@@ -851,8 +849,6 @@ local function OnPlayerActivated(inst, player)
     end
     _activatedPlayer = player
     _inCaves = inst:HasTag("cave")
-    _inRuins = IsInRuins(player)
-    _inLunar = IsInLunar(player)
     StopSoundEmitter()
     StartSoundEmitter()
     StartPlayerListeners(player)
@@ -870,6 +866,7 @@ local function OnPlayerDeactivated(inst, player)
 end
 
 local function OnEnableDynamicMusic(inst, enable)
+    print("EnableDynamicMusic fired with value enable=" .. (enable and "true" or "false"))
     if _isEnabled ~= enable then
         if not enable and _soundEmitter ~= nil then
             StopDanger()
