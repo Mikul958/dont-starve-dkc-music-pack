@@ -778,7 +778,7 @@ local function StartPlayerListeners(player)
         inst:ListenForEvent("goenlightened", OnInsane, player)
     end
     inst:ListenForEvent("triggeredevent", StartTriggeredEvent, player)
-    inst:ListenForEvent("boatspedup", StartTriggeredWater, player)
+    inst:ListenForEvent("boatspedup", StartTriggeredWater, player)  -- TODO boatspedup might not exist? found boat_start_moving, boat_stop_moving, playboatmusic, and onsink.
     if MISC_EVENTS then
         inst:ListenForEvent("isfeasting", StartTriggeredFeasting, player)
         inst:ListenForEvent("playtrainingmusic", StartTraining, player)
