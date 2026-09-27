@@ -9,27 +9,29 @@ return Class(function(self, inst)
 --------------------------------------------------------------------------
 
 local CONTINUOUS_MODE = DKC_MUSIC_REVISITED.CONFIG.MAIN.continuousMode
-local MISC_EVENTS = DKC_MUSIC_REVISITED.CONFIG.MAIN.miscEvents  -- Currently always false, this is just preferable to commenting/removing lines
+local MISC_EVENTS = DKC_MUSIC_REVISITED.CONFIG.MAIN.miscEvents  -- Currently always false, this is just preferable to commenting/removing event listeners
 local TRACK_CONFIG = DKC_MUSIC_REVISITED.CONFIG.TRACK
 
 local SEASON_BUSY_MUSIC = {
-    day = {
-        autumn = "music_mod/music/music_work",
-        winter = "music_mod/music/music_work_winter",
-        spring = "music_mod/music/music_work_spring",
-        summer = "music_mod/music/music_work_summer",
+    autumn = {
+        day = "music_mod/music/music_work",
+        dusk = "music_mod/music/music_work_dusk",
+        night = (TRACK_CONFIG.useNewAutumnNight and "music_mod/music/music_work_night_alt" or "music_mod/music/music_work_night")
     },
-    dusk = {
-        autumn = "music_mod/music/music_work_dusk",
-        winter = (TRACK_CONFIG.useNewWinterDusk and "music_mod/music/music_work_winter_dusk_alt" or "music_mod/music/music_work_winter_dusk"),
-        spring = "music_mod/music/music_work_spring_dusk",
-        summer = "music_mod/music/music_work_summer_dusk",
+    winter = {
+        day = "music_mod/music/music_work_winter",
+        dusk = (TRACK_CONFIG.useNewWinterDusk and "music_mod/music/music_work_winter_dusk_alt" or "music_mod/music/music_work_winter_dusk"),
+        night = "music_mod/music/music_work_winter_night"
     },
-    night = {
-        autumn = (TRACK_CONFIG.useNewAutumnNight and "music_mod/music/music_work_night_alt" or "music_mod/music/music_work_night"),
-        winter = "music_mod/music/music_work_winter_night",
-        spring = "music_mod/music/music_work_spring_night",
-        summer = "music_mod/music/music_work_summer_night",
+    spring = {
+        day = "music_mod/music/music_work_spring",
+        dusk = "music_mod/music/music_work_spring_dusk",
+        night = "music_mod/music/music_work_spring_night"
+    },
+    summer = {
+        day = "music_mod/music/music_work_summer",
+        dusk = "music_mod/music/music_work_summer_dusk",
+        night = "music_mod/music/music_work_summer_night"
     }
 }
 
@@ -72,7 +74,7 @@ local NIGHTMARE_PHASES = {
 
 -- Collection of event music. Keys are event tags as they are reported from the game, while indices inside tables correspond to reported event level.
 -- musicPhase is used to track which music is played; keep the same as the last entry to continue playing the same music as previous phase.
--- musicPhase of 0 (or entry missing entirely) will result in generic boss music. musicPhase of -1 will skip event music entirely
+-- musicPhase of -1 (default if entry missing) will result in generic boss music. musicPhase of 0 will skip music start entirely.
 local TRIGGERED_EVENT_MUSIC = {
     dragonfly = {
         {
@@ -82,19 +84,19 @@ local TRIGGERED_EVENT_MUSIC = {
     },
     beequeen = {
         {
-            musicPhase = 0,
+            musicPhase = -1,
             path = "music_mod/music/music_epicfight_4"
         }
     },
     toadstool = {
         {
-            musicPhase = 0,
+            musicPhase = -1,
             path =  "music_mod/music/music_epicfight_toadboss",
         }
     },
     antlion = {
         {
-            musicPhase = 0,
+            musicPhase = -1,
             "music_mod/music/music_epicfight_antlion",
         }
     },
@@ -146,20 +148,20 @@ local TRIGGERED_EVENT_MUSIC = {
     },
     daywalker = {
         {
-            musicPhase = 0,
-            path = ""  -- TODO can't find path
+            musicPhase = -1,
+            path = ""  -- I dunno
         }
     },
     eyeofterror = {
         {
             musicPhase = 1,
-            path = "music_mod/music/music_epicfight_eyeofterror"  -- TODO couldn't find the actual in-game path, just created this in my fdp
+            path = "music_mod/music/music_epicfight_eyeofterror"  -- Couldn't find the actual in-game path, just created this in my fdp
         }
     },
     wagboss_robot = {
         {
-            musicPhase = 0,
-            path = ""  -- TODO can't find path, also unsure if W.A.R.B.O.T. tag is correct
+            musicPhase = -1,
+            path = ""  -- I dunno, tag may also be inaccurate
         },
     },
 
@@ -195,13 +197,13 @@ local TRIGGERED_EVENT_MUSIC = {
     },
     pigking = {
         {
-            musicPhase = -1,
+            musicPhase = 0,
             path = "dontstarve/music/music_pigking_minigame"
         }
     },
     wagstaff_experiment = {
         {
-            musicPhase = -1,
+            musicPhase = 0,
             path = "music_mod/music/music_wagstaff_experiment"
         }
     },
@@ -224,12 +226,12 @@ local _busyTheme = nil
 local _isBusyDirty = false  -- Tracks whether the currently-selected busy music is outdated (important when we shouldn't play the new track immediately)
 local _stopTime = 0         -- Tracks the time when triggered music should be stopped (not itself a timer)
 local _dangerTask = nil
-local _triggeredLevel = -1       -- Tracks the level of current triggered event encounter
-local _triggeredMusicPhase = -1  -- Used to determine whether we should switch music on a new event level (e.g. boss phase change)
-local _inCaves = false           -- When in the cave layer
-local _inRuins = false           -- When in ruins
-local _nightmarePhase = nil      -- Current nightmare cycle phase
-local _inLunar = false           -- When on lunar island or in lunar grotto
+local _triggeredLevel = 0       -- Tracks the level of current triggered event encounter
+local _triggeredMusicPhase = 0  -- Used to determine whether we should switch music on a new event level (e.g. boss phase change)
+local _inCaves = false          -- When in the cave layer
+local _inRuins = false          -- When in ruins
+local _nightmarePhase = nil     -- Current nightmare cycle phase
+local _inLunar = false          -- When on lunar island or in lunar grotto
 
 local _delayActive = false         -- Tracks if a forced delay (e.g. from a stinger) is active
 local _hasInspirationBuff = false  -- Wigfrid inspiration buff
@@ -310,13 +312,13 @@ local function StartBusy(player)
                 -- Default to autumn day if music does not exist for this season/phase
                 local season = inst.state.season
                 local phase = inst.state.phase
-                if SEASON_BUSY_MUSIC[phase] == nil then
-                    phase = "day"
-                end
-                if SEASON_BUSY_MUSIC[phase][season] == nil then
+                if SEASON_BUSY_MUSIC[season] == nil then
                     season = "autumn"
                 end
-                _soundEmitter:PlaySound(SEASON_BUSY_MUSIC[phase][season], "busy")
+                if SEASON_BUSY_MUSIC[season][phase] == nil then
+                    phase = "day"
+                end
+                _soundEmitter:PlaySound(SEASON_BUSY_MUSIC[season][phase], "busy")
             end
             _busyTheme = BUSY_THEMES.FOREST
         end
@@ -327,15 +329,17 @@ local function StartBusy(player)
     end
 end
 
+local function StopOcean(player)
+    print("StopOcean called")
+    StopBusy(player)
+    if CONTINUOUS_MODE then
+        StopContinuous()
+        StartBusy(player)
+    end
+end
+
 local function StartOcean(player)
     print("StartOcean called")
-    local function StopOcean(...)
-        StopBusy(...)
-        if CONTINUOUS_MODE then
-            StopContinuous()
-            StartBusy(player)
-        end
-    end
     if _busyTask ~= nil and not _isBusyDirty then
         _stopTime = GetTime() + 15
     elseif _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
@@ -412,8 +416,8 @@ local function StopDanger(inst, istimeout)
         end
     end
     _dangerTask = nil
-    _triggeredLevel = -1
-    _triggeredMusicPhase = -1
+    _triggeredLevel = 0
+    _triggeredMusicPhase = 0
     _stopTime = 0
     _soundEmitter:KillSound("danger")
     if CONTINUOUS_MODE then
@@ -444,8 +448,8 @@ local function StartDanger(player)
                 "danger")
         end
         _dangerTask = inst:DoTaskInTime(10, StopDanger, true)
-        _triggeredLevel = -1
-        _triggeredMusicPhase = -1
+        _triggeredLevel = 0
+        _triggeredMusicPhase = 0
         _stopTime = 0
 
 		if _hasInspirationBuff then
@@ -470,7 +474,7 @@ end
 --[[ Private event handlers ]]
 --------------------------------------------------------------------------
 
-local function StartTriggeredEvent(player, data)
+local function OnTriggeredEvent(player, data)
     if data == nil then
         return
     end
@@ -485,13 +489,13 @@ local function StartTriggeredEvent(player, data)
 
     -- Don't update music if the configured musicPhase is -1 or the same as the last
     local eventTable = TRIGGERED_EVENT_MUSIC[data.name]
-    local musicPhase = 0
+    local musicPhase = -1
     local musicPath = ""
     if eventTable ~= nil and #eventTable > 0 then
         musicPhase = eventTable[level].musicPhase or eventTable[1].musicPhase
         musicPath = eventTable[level].path or eventTable[1].path
     end
-    if musicPhase < 0 or musicPhase == _triggeredMusicPhase then
+    if musicPhase == 0 or musicPhase == _triggeredMusicPhase then
         _stopTime = math.max(_stopTime, GetTime() + (data.duration or 10))
         return
     end
@@ -499,7 +503,7 @@ local function StartTriggeredEvent(player, data)
     -- Play default epicfight music if configured phase is 0 (or danger source wasn't found in table), else play specific danger music
     StopDanger()
     StopContinuous()
-    if musicPhase == 0 then
+    if musicPhase < 0 then
         _soundEmitter:PlaySound(
             _inRuins and "music_mod/music/music_epicfight_ruins" or
             _inCaves and "music_mod/music/music_epicfight_cave" or
@@ -517,8 +521,9 @@ local function StartTriggeredEvent(player, data)
     _stopTime = 0
 end
 
-local function StartTriggeredWater(player, data)
-    print("StartTriggeredWater fired with value data=" .. (data or "none"))  -- TODO testing
+local function OnPlayBoatMusic(player)
+    -- TODO rewrite
+    print("OnPlayBoatMusic fired")
     if player:GetCurrentPlatform() then
         _isBusyDirty = true
         StopContinuous()
@@ -526,15 +531,29 @@ local function StartTriggeredWater(player, data)
     end
 end
 
+local function OnBoatStopMoving(player)
+    -- TODO this might not be usable? may be attached to boat instead of player idk
+    print("OnBoatStopMoving fired")
+end
+
+local function OnGotOffPlatform(player)
+    -- TODO this might not be usable? may be attached to boat instead of player idk
+    print("OnGotOffPlatform fired")
+end
+
+local function OnSink(player, drownData)
+    print("OnSink fired")  -- TODO may not be necessary if got_off_platform covers?
+end
+
 -- **Currently disabled, event listener removed
-local function StartTriggeredFeasting(player, data)
+local function OnFeasting(player, data)
     if player and player.sg and player.sg:HasStateTag("feasting") then
         StartFeasting(player)
     end
 end
 
 -- **Currently disabled, event listener removed
-local function StartTraining(player)
+local function OnPlayTrainingMusic(player)
     if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled and _busyTheme ~= BUSY_THEMES.RACE then
         if _busyTask then
             _busyTask:Cancel()
@@ -553,7 +572,7 @@ local function StartTraining(player)
 end
 
 -- **Currently disabled, event listener removed
-local function StartRacing(player)
+local function OnPlayRaceMusic(player)
     if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
         if _busyTask then
             _busyTask:Cancel()
@@ -572,7 +591,7 @@ local function StartRacing(player)
 end
 
 -- **Currently disabled, event listener removed
-local function StartHermit(player)
+local function OnPlayHermitMusic(player)
     if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
         if _busyTask then
             _busyTask:Cancel()
@@ -591,12 +610,12 @@ local function StartHermit(player)
 end
 
 -- **Currently disabled, event listener removed
-local function StartFarming(player)
+local function OnPlayFarmingMusic(player)
 	StartBusyTheme(player, BUSY_THEMES.FARMING, "farming/music/farming", 15)
 end
 
 -- ** Currently disabled, event listener removed
-local function StartCarnivalMusic(player, is_game_active)
+local function OnPlayCarnivalMusic(player, is_game_active)
 	if _dangerTask ~= nil or (_busyTask ~= nil and _busyTheme == BUSY_THEMES.CARNIVAL_MINIGAME and not is_game_active) then
 	    return
 	end
@@ -777,15 +796,18 @@ local function StartPlayerListeners(player)
         inst:ListenForEvent("goinsane", OnInsane, player)
         inst:ListenForEvent("goenlightened", OnInsane, player)
     end
-    inst:ListenForEvent("triggeredevent", StartTriggeredEvent, player)
-    inst:ListenForEvent("boatspedup", StartTriggeredWater, player)  -- TODO boatspedup might not exist? found boat_start_moving, boat_stop_moving, playboatmusic, and onsink.
+    inst:ListenForEvent("triggeredevent", OnTriggeredEvent, player)
+    inst:ListenForEvent("playboatmusic", OnPlayBoatMusic, player)  -- TODO should play when boat vel > 0.2, alt boat_start_moving for vel > 0?
+    inst:ListenForEvent("boat_stop_moving", OnBoatStopMoving, player)
+    inst:ListenForEvent("got_off_platform", OnGotOffPlatform, player)
+    inst:ListenForEvent("onsink", OnSink, player)
     if MISC_EVENTS then
-        inst:ListenForEvent("isfeasting", StartTriggeredFeasting, player)
-        inst:ListenForEvent("playtrainingmusic", StartTraining, player)
-        inst:ListenForEvent("playracemusic", StartRacing, player)
-        inst:ListenForEvent("playhermitmusic", StartHermit, player)
-        inst:ListenForEvent("playfarmingmusic", StartFarming, player)
-        inst:ListenForEvent("playcarnivalmusic", StartCarnivalMusic, player)
+        inst:ListenForEvent("isfeasting", OnFeasting, player)
+        inst:ListenForEvent("playtrainingmusic", OnPlayTrainingMusic, player)
+        inst:ListenForEvent("playracemusic", OnPlayRaceMusic, player)
+        inst:ListenForEvent("playhermitmusic", OnPlayHermitMusic, player)
+        inst:ListenForEvent("playfarmingmusic", OnPlayFarmingMusic, player)
+        inst:ListenForEvent("playcarnivalmusic", OnPlayCarnivalMusic, player)
         inst:ListenForEvent("hasinspirationbuff", OnHasInspirationBuff, player)
     end
     inst:ListenForEvent("changearea", OnChangeArea, player)  -- Note: Pushed on initialization too
@@ -798,14 +820,17 @@ local function StopPlayerListeners(player)
     inst:RemoveEventCallback("attacked", OnAttacked, player)
     inst:RemoveEventCallback("goinsane", OnInsane, player)
     inst:RemoveEventCallback("goenlightened", OnInsane, player)
-    inst:RemoveEventCallback("triggeredevent", StartTriggeredEvent, player)
-    inst:RemoveEventCallback("boatspedup", StartTriggeredWater, player)
-    inst:RemoveEventCallback("isfeasting", StartTriggeredFeasting, player)
-    inst:RemoveEventCallback("playtrainingmusic", StartTraining, player)
-    inst:RemoveEventCallback("playracemusic", StartRacing, player)
-    inst:RemoveEventCallback("playhermitmusic", StartHermit, player)
-    inst:RemoveEventCallback("playfarmingmusic", StartFarming, player)
-    inst:RemoveEventCallback("playcarnivalmusic", StartCarnivalMusic, player)
+    inst:RemoveEventCallback("triggeredevent", OnTriggeredEvent, player)
+    inst:RemoveEventCallback("playboatmusic", OnPlayBoatMusic, player)
+    inst:RemoveEventCallback("boat_stop_moving", OnBoatStopMoving, player)
+    inst:RemoveEventCallback("got_off_platform", OnGotOffPlatform, player)
+    inst:RemoveEventCallback("onsink", OnSink, player)
+    inst:RemoveEventCallback("isfeasting", OnFeasting, player)
+    inst:RemoveEventCallback("playtrainingmusic", OnPlayTrainingMusic, player)
+    inst:RemoveEventCallback("playracemusic", OnPlayRaceMusic, player)
+    inst:RemoveEventCallback("playhermitmusic", OnPlayHermitMusic, player)
+    inst:RemoveEventCallback("playfarmingmusic", OnPlayFarmingMusic, player)
+    inst:RemoveEventCallback("playcarnivalmusic", OnPlayCarnivalMusic, player)
     inst:RemoveEventCallback("hasinspirationbuff", OnHasInspirationBuff, player)
     inst:RemoveEventCallback("changearea", OnChangeArea, player)
 end
