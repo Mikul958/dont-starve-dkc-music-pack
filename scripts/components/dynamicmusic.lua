@@ -107,7 +107,7 @@ local TRIGGERED_EVENT_MUSIC = {
         },
         {
             musicPhase = 2,
-            path = ""
+            path = ""  -- silence  TODO not handled in current script, need to re-add length check. Check how vanilla script does it, also maybe move second track here for song alignment?
         },
         {
             musicPhase = 3,
@@ -117,21 +117,21 @@ local TRIGGERED_EVENT_MUSIC = {
     shadowchess = {
         {
             musicPhase = 1,
-            path = "music_mod/music/music_epicfight_ruins",
+            path = "music_mod/music/music_epicfight_ruins",  -- Shadow Pieces
         }
     },
     stalker = {
         {
             musicPhase = 1,
-            path = "music_mod/music/music_epicfight_stalker"
+            path = "music_mod/music/music_epicfight_stalker"  -- Ancient fuelweaver
         },
         {
             musicPhase = 1,
             path = "music_mod/music/music_epicfight_stalker_b"
         },
         {
-            musicPhase = 1,
-            path = ""
+            musicPhase = 2,
+            path = ""  -- Silence
         }
     },
     crabking = {
@@ -146,26 +146,14 @@ local TRIGGERED_EVENT_MUSIC = {
             path = "music_mod/music/malbatross"
         }
     },
-    daywalker = {
-        {
-            musicPhase = -1,
-            path = ""  -- I dunno
-        }
-    },
     eyeofterror = {
         {
             musicPhase = 1,
-            path = "music_mod/music/music_epicfight_eyeofterror"  -- Couldn't find the actual in-game path, just created this in my fdp
+            path = "music_mod/music/music_epicfight_eot"
         }
     },
-    wagboss_robot = {
-        {
-            musicPhase = -1,
-            path = ""  -- I dunno, tag may also be inaccurate
-        },
-    },
 
-    -- Celestial champion phases are reported as 3 separate entities instead of using level for some reason
+    -- Celestial champion; phases are reported as 3 separate entities instead of using level for some reason
     alterguardian_phase1 = {
         {
             musicPhase = 1,
@@ -185,6 +173,52 @@ local TRIGGERED_EVENT_MUSIC = {
         }
     },
 
+    daywalker = {
+        {
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_daywalker"  -- Nightmare Werepig
+        }
+    },
+    daywalker2 = {
+		{
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_junkyardhog"  -- Scrappy Werepig
+        },
+	},
+    gestaltmutant = {
+		{
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_gestalt_mutants"  -- Mutated Deerclops/Bearger/Varg
+        },
+	},
+	sharkboi = {
+		{
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_sharkboy"  -- Frostjaw
+        },
+	},
+    worm_boss = {
+        {
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_worm",  -- Great Depths Worm
+        }
+    },
+	wagboss = {
+        {
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_wagboss_1",  -- W.A.R.B.O.T.
+        },
+        {
+            musicPhase = -1,
+            path = ""  -- silence
+        },
+        {
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_wagboss_2"
+        }
+	},
+
+    -- Non-boss events
     moonbase = {
         {
             musicPhase = 1,
@@ -195,10 +229,36 @@ local TRIGGERED_EVENT_MUSIC = {
             path = "music_mod/music/music_epicfight_moonbase_b"
         }
     },
+	vault = {
+        {
+            musicPhase = 0,
+            path = "music_mod/music/music_cavepuzzle"
+        },
+        {
+            musicPhase = 1,
+            path = ""  -- silence
+        },
+        {
+            musicPhase = 2,
+            path = "music_mod/music/music_epicfight_pillarguard"
+        }
+	},
+    knight_yoth = {
+        {
+            musicPhase = -1,
+            path = "music_mod/music/music_epicfight_yothknights"
+        },
+    },
+    piratemonkeyraid = {
+        {
+            musicPhase = -1,
+            path = "music_mod/musicmusic/warning_combo"
+        },
+    },
     pigking = {
         {
             musicPhase = 0,
-            path = "dontstarve/music/music_pigking_minigame"
+            path = "music_mod/music/music_pigking_minigame"
         }
     },
     wagstaff_experiment = {

@@ -10037,7 +10037,7 @@
 <_IOS_enabled>1</_IOS_enabled>
 </event>
 <event>
-<name>music_epicfight_eyeofterror</name>
+<name>music_epicfight_eot</name>
 <guid>{9225f533-6594-420d-bcd7-d2ccd454b252}</guid>
 <parameter_nextid>0</parameter_nextid>
 <layer_nextid>1</layer_nextid>

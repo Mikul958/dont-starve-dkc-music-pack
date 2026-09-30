@@ -1,4 +1,4 @@
--- Read in mod config and assign main menu music to custom FE track (if enabled)
+-- Read in mod config and push to global
 Assets = {
 	Asset("SOUNDPACKAGE", "sound/music_mod.fev"),
     Asset("SOUND", "sound/music_mod.fsb"),
@@ -20,21 +20,19 @@ GLOBAL.DKC_MUSIC_REVISITED = {
     }
 }
 
+-- Front end themes
 if GLOBAL.DKC_MUSIC_REVISITED.CONFIG.MAIN.replaceTitleMusic then
-    GLOBAL.FE_MUSIC = "music_mod/music/music_FE"
+    GLOBAL.FE_MUSIC = "music_mod/music/music_FE"  -- TODO randomize manually because FMOD randomization is buns
+
+    RemapSoundEvent( "dontstarve/together_FE/DST_theme_portaled",                     	"music_mod/music/DST_theme_portaled" )  -- Character select
+    RemapSoundEvent( "dontstarve/HUD/Together_HUD/collectionscreen/music/jukebox",    	"music_mod/music/jukebox" )             -- Item collection
+    RemapSoundEvent( "dontstarve/music/gramaphone_ragtime",                           	"music_mod/music/gramaphone_ragtime" )  -- Credits
 end
 
--- Other remappings
-
--- Front End
-RemapSoundEvent( "dontstarve/together_FE/DST_theme_portaled",                     	"music_mod/music/DST_theme_portaled" )  -- Character select
-RemapSoundEvent( "dontstarve/HUD/Together_HUD/collectionscreen/music/jukebox",    	"music_mod/music/jukebox" )             -- Character customization
-RemapSoundEvent( "dontstarve/music/gramaphone_ragtime",                           	"music_mod/music/gramaphone_ragtime" )  -- Credits
-
--- Insanity Ambience  TODO does removing this bring back original insanity ambience? Do I even want that?
+-- Insanity Ambience (No track in sound bank, results in no insanity ambience)
 RemapSoundEvent( "dontstarve/sanity/sanity", 										"music_mod/music/sanity" )
 
--- Woodie Wereforms  TODO are these handled by the engine? Don't appear in dynamicmusic
+-- Woodie Wereforms (Handled by the engine? Don't appear in vanilla dynamicmusic)
 RemapSoundEvent( "dontstarve/music/music_hoedown",                                  "music_mod/music/music_hoedown" )
 RemapSoundEvent( "dontstarve/music/music_hoedown_goose",                            "music_mod/music/music_hoedown_goose" )
 RemapSoundEvent( "dontstarve/music/music_hoedown_moose",                            "music_mod/music/music_hoedown_moose" )
