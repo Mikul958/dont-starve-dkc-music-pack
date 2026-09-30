@@ -24,7 +24,7 @@ if GLOBAL.DKC_MUSIC_REVISITED.CONFIG.MAIN.replaceTitleMusic then
     GLOBAL.FE_MUSIC = "music_mod/music/music_FE"
 end
 
--- Perform one-time remappings
+-- Other remappings
 
 -- Front End
 RemapSoundEvent( "dontstarve/together_FE/DST_theme_portaled",                     	"music_mod/music/DST_theme_portaled" )  -- Character select
@@ -34,7 +34,7 @@ RemapSoundEvent( "dontstarve/music/gramaphone_ragtime",                         
 -- Insanity Ambience  TODO does removing this bring back original insanity ambience? Do I even want that?
 RemapSoundEvent( "dontstarve/sanity/sanity", 										"music_mod/music/sanity" )
 
--- Woodie Wereforms  TODO these aren't even handled in DynamicMusic? Why are they here?
+-- Woodie Wereforms  TODO are these handled by the engine? Don't appear in dynamicmusic
 RemapSoundEvent( "dontstarve/music/music_hoedown",                                  "music_mod/music/music_hoedown" )
 RemapSoundEvent( "dontstarve/music/music_hoedown_goose",                            "music_mod/music/music_hoedown_goose" )
 RemapSoundEvent( "dontstarve/music/music_hoedown_moose",                            "music_mod/music/music_hoedown_moose" )
