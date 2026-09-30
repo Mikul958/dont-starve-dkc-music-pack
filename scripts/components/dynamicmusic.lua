@@ -219,7 +219,7 @@ self.inst = inst
 --Private
 local _isEnabled = true
 local _soundEmitter = nil     -- SoundEmitter component, used to update music track/intensity
-local _activatedPlayer = nil  -- Player that activated this component, used for performing some tasks
+local _activatedPlayer = nil  -- Player that activated this component, used for caching only, no logic
 
 local _busyTask = nil
 local _busyTheme = nil
@@ -232,7 +232,9 @@ local _inCaves = false          -- When in the cave layer
 local _inRuins = false          -- When in ruins
 local _nightmarePhase = nil     -- Current nightmare cycle phase
 local _inLunar = false          -- When on lunar island or in lunar grotto
-
+local _currentBoat = nil
+local _oceanTask = nil             -- TODO debugging to see if _busyTask mishandling is the issue
+local _isSailing = false           -- Used to determine whether we are still sailing for sailing music deactivation
 local _delayActive = false         -- Tracks if a forced delay (e.g. from a stinger) is active
 local _hasInspirationBuff = false  -- Wigfrid inspiration buff
 
@@ -275,8 +277,16 @@ local function StartBusy(player)
         _stopTime = GetTime() + 15
     elseif _dangerTask == nil and not _delayActive and (CONTINUOUS_MODE or _stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
 
-        -- Check if player is in a lunar biome and assign lunar music
-        if _inLunar then
+        -- Check if player is sailing and assign sailing music
+        if _isSailing then
+            if _busyTheme ~= BUSY_THEMES.OCEAN then
+                _soundEmitter:KillSound("busy")
+                _soundEmitter:PlaySound("music_mod/music/sailing", "busy")
+            end
+            _busyTheme = BUSY_THEMES.OCEAN
+
+        -- Else check if player is in a lunar biome and assign lunar music
+        elseif _inLunar then
             if _busyTheme ~= BUSY_THEMES.LUNAR then
                 _soundEmitter:KillSound("busy")
                 _soundEmitter:PlaySound("music_mod/music/working", "busy")
@@ -330,7 +340,10 @@ local function StartBusy(player)
 end
 
 local function StopOcean(player)
-    print("StopOcean called")
+    print("StopOcean called")  -- TODO debug
+
+    _isSailing = false
+    _isBusyDirty = true  -- TODO necessary?
     StopBusy(player)
     if CONTINUOUS_MODE then
         StopContinuous()
@@ -340,19 +353,11 @@ end
 
 local function StartOcean(player)
     print("StartOcean called")
-    if _busyTask ~= nil and not _isBusyDirty then
-        _stopTime = GetTime() + 15
-    elseif _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then
-        if _busyTheme ~= BUSY_THEMES.OCEAN or _isBusyDirty then
-            _isBusyDirty = false
-            _soundEmitter:KillSound("busy")
-            _soundEmitter:PlaySound("music_mod/music/sailing", "busy")
-        end
-        _busyTheme = BUSY_THEMES.OCEAN
 
-        _soundEmitter:SetParameter("busy", "intensity", 1)
-        _busyTask = inst:DoTaskInTime(30, StopOcean, true)
-        _stopTime = 0
+    _isSailing = true
+    _isBusyDirty = true
+    if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then  -- TODO all these conditions may not be necessary anymore
+        StartBusy(player)
     end
 end
 
@@ -421,7 +426,7 @@ local function StopDanger(inst, istimeout)
     _stopTime = 0
     _soundEmitter:KillSound("danger")
     if CONTINUOUS_MODE then
-        StartBusy(_activatedPlayer)
+        StartBusy(inst)
     end
 end
 
@@ -522,27 +527,61 @@ local function OnTriggeredEvent(player, data)
 end
 
 local function OnPlayBoatMusic(player)
-    -- TODO rewrite
     print("OnPlayBoatMusic fired")
+
     if player:GetCurrentPlatform() then
-        _isBusyDirty = true
-        StopContinuous()
-        StartOcean(player)
+        if not _isSailing then
+            print("OnPlayBoatMusic -- Transitioning to sailing music")
+            StopContinuous()
+            StartOcean(player)
+        elseif _oceanTask ~= nil then
+            print("OnPlayBoatMusic -- Canceling sailing music stop")
+            _oceanTask:Cancel()
+            _oceanTask = nil
+        end
     end
 end
 
-local function OnBoatStopMoving(player)
-    -- TODO this might not be usable? may be attached to boat instead of player idk
-    print("OnBoatStopMoving fired")
+local function OnGotOnPlatform(player)
+    print("OnGotOnPlatform fired")  -- TODO debug
+
+    local platform = player:GetCurrentPlatform()
+    if platform ~= nil and platform:HasTag("boat") then
+        _currentBoat = platform
+        inst:ListenForEvent("boat_stop_moving", OnBoatStopMoving, _currentBoat)  -- TODO have to replace this with a periodic check, walkableplatformplayer does not expose velocity boo
+
+        print("OnGotOnPlatform -- Platform is boat, velocity is: ")
+        if platform.Physics then
+            local x, y, z = platform.Physics:GetVelocity()
+            print(x .. ", " .. y .. ", " .. z)
+        else
+            print("nil")
+        end
+
+        -- We are not sailing and jumped to a boat that is above playboatmusic velocity, start sailing music
+        if not _isSailing and _currentBoat.components.boatphysics and _currentBoat.components.boatphysics:GetVelocity() > 0.2 then
+            print("OnGotOnPlatform -- New boat meets sail start requirements, starting sailing music")
+            StopContinuous()
+            StartOcean(player)
+
+        -- We are already sailing and jumped to a boat that is still in motion, cancel sailing music stop
+        elseif _isSailing and _oceanTask ~= nil and _currentBoat.components.boatphysics and _currentBoat.components.boatphysics:GetVelocity() > 0 then
+            print("OnGotOnPlatform -- New boat still moving, canceling sailing music stop")
+            _oceanTask:Cancel()
+            _oceanTask = nil
+        end
+    end
 end
 
 local function OnGotOffPlatform(player)
-    -- TODO this might not be usable? may be attached to boat instead of player idk
-    print("OnGotOffPlatform fired")
-end
+    print("OnGotOffPlatform fired")  -- TODO debug
 
-local function OnSink(player, drownData)
-    print("OnSink fired")  -- TODO may not be necessary if got_off_platform covers?
+    if _currentBoat ~= nil then
+        print("OnGotOffPlatform -- current boat is not nil")
+        inst:RemoveEventCallback("boat_stop_moving", OnBoatStopMoving, _currentBoat)
+        _currentBoat = nil
+    end
+    _oceanTask = inst:DoTaskInTime(8, StopOcean, true)
 end
 
 -- **Currently disabled, event listener removed
@@ -687,7 +726,21 @@ local function OnInsane()
         --Repurpose this as a delay before stingers or busy can start again
         _stopTime = GetTime() + 15
 		if CONTINUOUS_MODE then
-			_activatedPlayer:DoTaskInTime(12, function(player)
+			inst:DoTaskInTime(12, function(player)
+				StartBusy(player)
+			end)
+		end
+    end
+end
+
+local function OnEnlightened()
+    if _dangerTask == nil and _isEnabled then
+        _soundEmitter:PlaySound("dontstarve/sanity/lunacy_stinger")
+        StopContinuous()
+        --Repurpose this as a delay before stingers or busy can start again
+        _stopTime = GetTime() + 15
+		if CONTINUOUS_MODE then
+			inst:DoTaskInTime(12, function(player)
 				StartBusy(player)
 			end)
 		end
@@ -706,7 +759,7 @@ local function OnChangeArea(player)
         _isBusyDirty = true
     end
     if _isBusyDirty and CONTINUOUS_MODE then
-        StartBusy(_activatedPlayer)
+        StartBusy(player)
     end
 end
 
@@ -744,7 +797,7 @@ local function OnPhase(inst, phase)
     end
 
     -- Queue music update after delay and start playing if continuous mode
-    _activatedPlayer:DoTaskInTime(musicDelay, function(player)
+    inst:DoTaskInTime(musicDelay, function(player)
         _isBusyDirty = true
         if CONTINUOUS_MODE then
             _delayActive = false
@@ -770,7 +823,7 @@ local function OnNightmarePhase(inst, phase)
     if _dangerTask ~= nil or not _isEnabled then
         _isBusyDirty = true
     else
-        _activatedPlayer:DoTaskInTime(2, function(player)
+        inst:DoTaskInTime(2, function(player)
             _isBusyDirty = true
             if CONTINUOUS_MODE then
                 StartBusy(player)
@@ -794,13 +847,12 @@ local function StartPlayerListeners(player)
     inst:ListenForEvent("attacked", OnAttacked, player)
     if not CONTINUOUS_MODE then
         inst:ListenForEvent("goinsane", OnInsane, player)
-        inst:ListenForEvent("goenlightened", OnInsane, player)
+        inst:ListenForEvent("goenlightened", OnEnlightened, player)
     end
     inst:ListenForEvent("triggeredevent", OnTriggeredEvent, player)
-    inst:ListenForEvent("playboatmusic", OnPlayBoatMusic, player)  -- TODO should play when boat vel > 0.2, alt boat_start_moving for vel > 0?
-    inst:ListenForEvent("boat_stop_moving", OnBoatStopMoving, player)
-    inst:ListenForEvent("got_off_platform", OnGotOffPlatform, player)
-    inst:ListenForEvent("onsink", OnSink, player)
+    inst:ListenForEvent("playboatmusic", OnPlayBoatMusic, player)
+    inst:ListenForEvent("got_on_platform", OnGotOnPlatform, player)
+    inst:ListenForEvent("got_off_platform", OnGotOffPlatform, player)  -- Note: Pushed when boat sinks too
     if MISC_EVENTS then
         inst:ListenForEvent("isfeasting", OnFeasting, player)
         inst:ListenForEvent("playtrainingmusic", OnPlayTrainingMusic, player)
@@ -819,12 +871,11 @@ local function StopPlayerListeners(player)
     inst:RemoveEventCallback("performaction", CheckAction, player)
     inst:RemoveEventCallback("attacked", OnAttacked, player)
     inst:RemoveEventCallback("goinsane", OnInsane, player)
-    inst:RemoveEventCallback("goenlightened", OnInsane, player)
+    inst:RemoveEventCallback("goenlightened", OnEnlightened, player)
     inst:RemoveEventCallback("triggeredevent", OnTriggeredEvent, player)
     inst:RemoveEventCallback("playboatmusic", OnPlayBoatMusic, player)
-    inst:RemoveEventCallback("boat_stop_moving", OnBoatStopMoving, player)
+    inst:RemoveEventCallback("got_on_platform", OnGotOnPlatform, player)
     inst:RemoveEventCallback("got_off_platform", OnGotOffPlatform, player)
-    inst:RemoveEventCallback("onsink", OnSink, player)
     inst:RemoveEventCallback("isfeasting", OnFeasting, player)
     inst:RemoveEventCallback("playtrainingmusic", OnPlayTrainingMusic, player)
     inst:RemoveEventCallback("playracemusic", OnPlayRaceMusic, player)
@@ -900,7 +951,7 @@ local function OnEnableDynamicMusic(inst, enable)
             _isBusyDirty = true
         end
 		if enable and CONTINUOUS_MODE then
-			_activatedPlayer:DoTaskInTime(6, function(player)
+			inst:DoTaskInTime(6, function(player)
 				StartBusy(player)
 			end)
 		end
