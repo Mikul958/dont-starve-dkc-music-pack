@@ -292,9 +292,8 @@ local _inCaves = false          -- When in the cave layer
 local _inRuins = false          -- When in ruins
 local _nightmarePhase = nil     -- Current nightmare cycle phase
 local _inLunar = false          -- When on lunar island or in lunar grotto
-local _currentBoat = nil
-local _oceanTask = nil             -- TODO debugging to see if _busyTask mishandling is the issue
-local _isSailing = false           -- Used to determine whether we are still sailing for sailing music deactivation
+local _isSailing = false        -- Used to determine whether we are still sailing for sailing music deactivation
+local _sailingTask = nil
 local _delayActive = false         -- Tracks if a forced delay (e.g. from a stinger) is active
 local _hasInspirationBuff = false  -- Wigfrid inspiration buff
 
@@ -400,8 +399,6 @@ local function StartBusy(player)
 end
 
 local function StopOcean(player)
-    print("StopOcean called")  -- TODO debug
-
     _isSailing = false
     _isBusyDirty = true  -- TODO necessary?
     StopBusy(player)
@@ -412,12 +409,29 @@ local function StopOcean(player)
 end
 
 local function StartOcean(player)
-    print("StartOcean called")
-
     _isSailing = true
     _isBusyDirty = true
     if _dangerTask == nil and (_stopTime == 0 or GetTime() >= _stopTime) and _isEnabled then  -- TODO all these conditions may not be necessary anymore
         StartBusy(player)
+    end
+end
+
+local function CheckOceanStop(inst, player)
+    if player.components.walkableplatformplayer == nil then
+        if _sailingTask ~= nil then
+            _sailingTask:Cancel()
+            _sailingTask = nil
+        end
+        return
+    end
+
+    local boatspeed = player.components.walkableplatformplayer.boatspeed
+    if boatspeed == nil or boatspeed < 0.2 then
+        if _sailingTask ~= nil then
+            _sailingTask:Cancel()
+            _sailingTask = nil
+        end
+        _sailingTask = inst:DoTaskInTime(8, StopOcean, true)
     end
 end
 
@@ -587,61 +601,31 @@ local function OnTriggeredEvent(player, data)
 end
 
 local function OnPlayBoatMusic(player)
-    print("OnPlayBoatMusic fired")
-
     if player:GetCurrentPlatform() then
         if not _isSailing then
-            print("OnPlayBoatMusic -- Transitioning to sailing music")
             StopContinuous()
             StartOcean(player)
-        elseif _oceanTask ~= nil then
-            print("OnPlayBoatMusic -- Canceling sailing music stop")
-            _oceanTask:Cancel()
-            _oceanTask = nil
+        elseif _sailingTask ~= nil then
+            _sailingTask:Cancel()
+            _sailingTask = nil
         end
-    end
-end
-
-local function OnGotOnPlatform(player)
-    print("OnGotOnPlatform fired")  -- TODO debug
-
-    local platform = player:GetCurrentPlatform()
-    if platform ~= nil and platform:HasTag("boat") then
-        _currentBoat = platform
-        inst:ListenForEvent("boat_stop_moving", OnBoatStopMoving, _currentBoat)  -- TODO have to replace this with a periodic check, walkableplatformplayer does not expose velocity boo
-
-        print("OnGotOnPlatform -- Platform is boat, velocity is: ")
-        if platform.Physics then
-            local x, y, z = platform.Physics:GetVelocity()
-            print(x .. ", " .. y .. ", " .. z)
-        else
-            print("nil")
-        end
-
-        -- We are not sailing and jumped to a boat that is above playboatmusic velocity, start sailing music
-        if not _isSailing and _currentBoat.components.boatphysics and _currentBoat.components.boatphysics:GetVelocity() > 0.2 then
-            print("OnGotOnPlatform -- New boat meets sail start requirements, starting sailing music")
-            StopContinuous()
-            StartOcean(player)
-
-        -- We are already sailing and jumped to a boat that is still in motion, cancel sailing music stop
-        elseif _isSailing and _oceanTask ~= nil and _currentBoat.components.boatphysics and _currentBoat.components.boatphysics:GetVelocity() > 0 then
-            print("OnGotOnPlatform -- New boat still moving, canceling sailing music stop")
-            _oceanTask:Cancel()
-            _oceanTask = nil
-        end
+        _sailingTask = inst:DoPeriodicTask(2, CheckOceanStop, 2, player)  -- Start periodic velocity check to see if we should stop music
     end
 end
 
 local function OnGotOffPlatform(player)
-    print("OnGotOffPlatform fired")  -- TODO debug
-
-    if _currentBoat ~= nil then
-        print("OnGotOffPlatform -- current boat is not nil")
-        inst:RemoveEventCallback("boat_stop_moving", OnBoatStopMoving, _currentBoat)
-        _currentBoat = nil
+    if _sailingTask ~= nil then
+        _sailingTask:Cancel()
+        _sailingTask = nil
     end
-    _oceanTask = inst:DoTaskInTime(8, StopOcean, true)
+    if _isSailing then
+        _sailingTask = inst:DoTaskInTime(8, StopOcean, true)
+    end
+
+    -- Reset boatspeed in walkableplatformplayer (it does not do this itself); this allows playboatmusic to fire again when player hops back onto a boat already moving fast enough
+    if (player.components.walkableplatformplayer) then
+        player.components.walkableplatformplayer.boatspeed = nil
+    end
 end
 
 -- **Currently disabled, event listener removed
@@ -911,7 +895,6 @@ local function StartPlayerListeners(player)
     end
     inst:ListenForEvent("triggeredevent", OnTriggeredEvent, player)
     inst:ListenForEvent("playboatmusic", OnPlayBoatMusic, player)
-    inst:ListenForEvent("got_on_platform", OnGotOnPlatform, player)
     inst:ListenForEvent("got_off_platform", OnGotOffPlatform, player)  -- Note: Pushed when boat sinks too
     if MISC_EVENTS then
         inst:ListenForEvent("isfeasting", OnFeasting, player)
@@ -934,7 +917,6 @@ local function StopPlayerListeners(player)
     inst:RemoveEventCallback("goenlightened", OnEnlightened, player)
     inst:RemoveEventCallback("triggeredevent", OnTriggeredEvent, player)
     inst:RemoveEventCallback("playboatmusic", OnPlayBoatMusic, player)
-    inst:RemoveEventCallback("got_on_platform", OnGotOnPlatform, player)
     inst:RemoveEventCallback("got_off_platform", OnGotOffPlatform, player)
     inst:RemoveEventCallback("isfeasting", OnFeasting, player)
     inst:RemoveEventCallback("playtrainingmusic", OnPlayTrainingMusic, player)
@@ -1002,7 +984,6 @@ local function OnPlayerDeactivated(inst, player)
 end
 
 local function OnEnableDynamicMusic(inst, enable)
-    print("EnableDynamicMusic fired with value enable=" .. (enable and "true" or "false"))
     if _isEnabled ~= enable then
         if not enable and _soundEmitter ~= nil then
             StopDanger()
