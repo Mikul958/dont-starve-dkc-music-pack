@@ -425,6 +425,7 @@ local function CheckOceanStop(inst, player)
         return
     end
 
+    -- Check current boat speed. If below playboatmusic threshold, break periodic CheckOceanStop loop and queue ocean music cancellation
     local boatspeed = player.components.walkableplatformplayer.boatspeed
     if boatspeed == nil or boatspeed < 0.2 then
         if _sailingTask ~= nil then
@@ -606,7 +607,7 @@ local function OnPlayBoatMusic(player)
             StopContinuous()
             StartOcean(player)
         elseif _sailingTask ~= nil then
-            _sailingTask:Cancel()
+            _sailingTask:Cancel()  -- Stop ocean music cancellation if it exists. Can potentially stop periodic check instead but it's restarted below anyway
             _sailingTask = nil
         end
         _sailingTask = inst:DoPeriodicTask(2, CheckOceanStop, 2, player)  -- Start periodic velocity check to see if we should stop music
@@ -619,7 +620,7 @@ local function OnGotOffPlatform(player)
         _sailingTask = nil
     end
     if _isSailing then
-        _sailingTask = inst:DoTaskInTime(8, StopOcean, true)
+        _sailingTask = inst:DoTaskInTime(8, StopOcean, true)  -- Queue ocean music cancellation
     end
 
     -- Reset boatspeed in walkableplatformplayer (it does not do this itself); this allows playboatmusic to fire again when player hops back onto a boat already moving fast enough
