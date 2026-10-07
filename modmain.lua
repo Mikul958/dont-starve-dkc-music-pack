@@ -8,7 +8,7 @@ TITLE_MUSIC = {
     "music_mod/music/music_FE_alt"
 }
 local musicIndex = math.random(1, #TITLE_MUSIC)
-local updateFE = true  -- Ensure music only updates once per scene load; hacky solution for OnBecomeActive being called on init and only one more time after changing music.
+local updateFE = true  -- Ensure music only updates once per scene load; hacky solution for OnBecomeActive being called on init and only one more time after changing music. TODO erm
 
 GLOBAL.DKC_MUSIC_REVISITED = {
     CONFIG = {

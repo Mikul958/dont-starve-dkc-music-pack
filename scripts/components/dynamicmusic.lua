@@ -107,11 +107,11 @@ local TRIGGERED_EVENT_MUSIC = {
         },
         {
             musicPhase = 2,
-            path = ""  -- silence  TODO not handled in current script, need to re-add length check. Check how vanilla script does it, also maybe move second track here for song alignment?
+            path = "music_mod/music/music_epicfight_5b"
         },
         {
-            musicPhase = 3,
-            path = "music_mod/music/music_epicfight_5b",  -- TODO implement Northern Hemispheres climax in FMOD if possible, otherwise remove
+            musicPhase = 2,
+            path = "",  -- TODO implement Northern Hemispheres climax in FMOD if possible, otherwise remove
         }
     },
     shadowchess = {
@@ -142,7 +142,7 @@ local TRIGGERED_EVENT_MUSIC = {
     },
     malbatross = {
         {
-            musicPhase = 1,
+            musicPhase = -1,
             path = "music_mod/music/malbatross"
         }
     },
@@ -577,7 +577,7 @@ local function OnTriggeredEvent(player, data)
     end
     if musicPhase == 0 or musicPhase == _triggeredMusicPhase then
         _stopTime = math.max(_stopTime, GetTime() + (data.duration or 10))
-        return
+        return  -- TODO bug here with Klaus phase change, plays busy music in last phase, debug
     end
 
     -- Play default epicfight music if configured phase is 0 (or danger source wasn't found in table), else play specific danger music
